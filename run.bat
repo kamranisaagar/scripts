@@ -1,7 +1,7 @@
 echo "Post Cash and Transactions"
 cd postcash
 postCash.bat
-exit
 
+rd /q /s "c:\postcash" 2>nul
 
 
