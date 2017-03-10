@@ -189,7 +189,7 @@ function getAllProducts(){
 	//All Cartons
 	
 	$query = "SELECT p.code, ROUND(p.pricesell+(p.pricesell*t.rate)-IFNULL(SUM(ctnamount),0),2) AS pricesell FROM products p
-			LEFT JOIN promo_header ph ON ph.articlecategory=p.sub_category AND startdate <= CURDATE() AND enddate >= CURDATE() AND remote='ACKNOWLEDGED'
+			LEFT JOIN promo_header ph ON ph.articlecategory=p.sub_category AND startdate <= CURDATE() AND enddate >= CURDATE() AND ph.remote='ACKNOWLEDGED'
 			JOIN taxes t ON t.id=p.taxcat
 
 			WHERE p.category='001' and p.isvprice = false
