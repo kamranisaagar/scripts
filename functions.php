@@ -1,6 +1,6 @@
 <?php
 
-require_once('../assets/db.php');
+require_once('c:/mpulse/assets/db.php');
 
 $products = getAllProducts();
 	
