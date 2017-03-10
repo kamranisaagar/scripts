@@ -2,6 +2,6 @@ echo "Post Cash and Transactions"
 cd postcash
 postCash.bat
 
-if exist "C:\postcash\" rd /q /s "C:\postcash"
+rmdir C:\postcash\ /q /s 2>nul
 
 
