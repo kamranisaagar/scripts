@@ -1,4 +1,4 @@
-copy /y C:\mpulse\scripts\php.ini C:\mpulse\assets\php_compiler\php5.4.16
+del /F /Q "C:\mpulse\clone.bat"
 
 echo "Post Cash and Transactions"
 cd postcash
