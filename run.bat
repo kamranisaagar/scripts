@@ -8,4 +8,3 @@ echo "Post Cash and Transactions"
 cd ../postcash
 call "prompt.bat"
 
-

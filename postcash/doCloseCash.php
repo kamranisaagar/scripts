@@ -68,7 +68,7 @@ function updateProperties(){
 function getSequenceNumber(){
 	global $link;
 	
-	$query="select max(hostsequence) as seq from closedcash";
+	$query="select max(hostsequence) as seq from closedcash where host='TSG'";
 
 	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 	
@@ -82,7 +82,7 @@ function getSequenceNumber(){
  function getcurrentUID($sequence){
 	global $link;
 	
-	$query="select money as money from closedcash where hostsequence='$sequence'";
+	$query="select money as money from closedcash where hostsequence='$sequence' and host='TSG'";
 
 	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 	
