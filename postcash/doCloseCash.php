@@ -82,7 +82,7 @@ function getSequenceNumber(){
  function getcurrentUID($sequence){
 	global $link;
 	
-	$query="select money as money from closedcash where host='TSG' and hostsequence='$sequence'";
+	$query="select money as money from closedcash where hostsequence='$sequence'";
 
 	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 	
