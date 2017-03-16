@@ -68,7 +68,7 @@ function updateProperties(){
 function getSequenceNumber(){
 	global $link;
 	
-	$query="select max(hostsequence) as seq from closedcash where host='TSG'";
+	$query="select max(hostsequence) as seq from closedcash";
 
 	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 	
