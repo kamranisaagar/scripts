@@ -1,5 +1,5 @@
 Taskkill /IM javaw.exe /F
 
-ui.jar
+start ui.jar
 
 exit
