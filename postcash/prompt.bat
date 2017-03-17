@@ -19,7 +19,7 @@ goto A
 :Yes
 cls
 echo.
-postCash.bat
+c:/mpulse/scripts/postcash/postCash.bat
 set /p pause="Press any key to exit!... "
 exit
 
