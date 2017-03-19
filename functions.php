@@ -43,7 +43,7 @@ function putTransactionLog($storeid) {
 	
 	if (count($transactionValues)>0){
 	// Dump All Transactions
-	$query = "insert into transaction(transid,storeid,timestamp,transtypeid,total) values $implodedTransactions";  
+	$query = "insert ignore into transaction(transid,storeid,timestamp,transtypeid,total) values $implodedTransactions";  
 	$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));	
 	}
 	
@@ -89,7 +89,7 @@ function putTransactionLine($storeid) {
     $implodedTransactions = implode(',',$transactionValues);
 		if (count($transactionValues)>0){
 	
-			$query = "insert into transline (transid,barcode,qty,price) values $implodedTransactions";
+			$query = "insert ignore into transline (transid,barcode,qty,price) values $implodedTransactions";
 			$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 		}
 	
