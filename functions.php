@@ -79,7 +79,7 @@ function putTransactionLine($storeid) {
 		
 		//Checking if transaction is suspicious
 		if (isset($products[$barcode])){
-			if ($products[$barcode] - $price > 0.05){
+			if ($products[$barcode] - $price > 0.10){
 				$flaggedTrans[]="('$transactionid')";
 			}
 		}
