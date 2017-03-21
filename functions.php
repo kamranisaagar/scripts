@@ -76,7 +76,7 @@ function putTransactionLine($storeid) {
 		$output[] = $row['receiptid'];
 		
 		$transactionValues[]="('$transactionid','$barcode','$qty','$price')";
-		+
+		
 		//Checking if transaction is suspicious
 		if (isset($products[$barcode])){
 			if (($products[$barcode] - $price) > 0.1{
