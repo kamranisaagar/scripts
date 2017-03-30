@@ -166,19 +166,38 @@ AND datenew <= (SELECT MAX(dateend) FROM closedcash
 WHERE dateend IS NOT NULL
 ORDER BY datestart DESC)";
 
-	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));	
 	
 	while ($row = mysqli_fetch_assoc($result)) {
 		
 		$total= $row['total'];
 		$customerCount = $row['cc'];
 		$date = $row['date'];
-	  
-	  // Dump the record
-	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,date) values ('$total','$customerCount','$storeid','$date')";
-		$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 		}
-	  echo "Please wait...";
+
+$query="SELECT SUM(total) AS eft FROM payments p
+JOIN receipts r ON p.receipt = r.ID AND p.payment='card'
+
+WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)
+AND datenew <= (SELECT MAX(dateend) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		
+		$eftpos= $row['eft'];
+		}
+
+
+// Dump the record
+	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,eftpos,date) values ('$total','$customerCount','$storeid','$eftpos','$date')";
+		$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
+		
+echo "Please wait...";
   }
   
 function getAllProducts(){
