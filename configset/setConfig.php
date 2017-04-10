@@ -28,7 +28,7 @@ $query = "UPDATE roles SET permissions='{$empRole}' WHERE id='2';";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "UPDATE promo_header SET remote='RECALLED_ACK' WHERE articlecategory='BON40';";
+$query = "UPDATE promo_header SET remote='RECALLED_ACK' WHERE articlecategory='BON40' and type=2;";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
