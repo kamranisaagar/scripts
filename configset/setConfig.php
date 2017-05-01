@@ -2,6 +2,7 @@
 
 require_once('../functions.php');
 require_once('roles.php');
+require_once('vproducts.php');
 
 
 $query = "UPDATE people SET visible=FALSE WHERE id NOT IN ('0','1','2','3');";
@@ -32,3 +33,5 @@ $query = "UPDATE promo_header SET remote='RECALLED_ACK' WHERE articlecategory='B
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
+// Setting Variable Products
+$result = $link->query($productsQuery) or die("Error in the consult.." . mysqli_error($link));
