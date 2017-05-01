@@ -43,6 +43,10 @@ INSERT IGNORE INTO unicenta.products (ID, REFERENCE, CODE, NAME, PRICEBUY, PRICE
 VALUES ('VP-15', 'VP-15', 'VP-15', '-Cigar Product', '1', '1', 'ON-15', '001', true);
 INSERT IGNORE INTO unicenta.products_cat VALUES('VP-15',NULL);
 
+INSERT IGNORE INTO unicenta.products (ID, REFERENCE, CODE, NAME, PRICEBUY, PRICESELL, CATEGORY, TAXCAT, ISVPRICE) 
+VALUES ('VP-16', 'VP-16', 'VP-16', '-Slurshie', '1', '1', 'ON-7', '001', true);
+INSERT IGNORE INTO unicenta.products_cat VALUES('VP-16',NULL);
+
 UPDATE unicenta.products set display=name where code like 'VP-%';
 UPDATE unicenta.categories set catshowname=true where id like 'ON-%'
 
