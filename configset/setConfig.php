@@ -34,4 +34,4 @@ $query = "UPDATE promo_header SET remote='RECALLED_ACK' WHERE articlecategory='B
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
 // Setting Variable Products
-$result = $link->query($productsQuery) or die("Error in the consult.." . mysqli_error($link));
+$result = $link->multi_query($productsQuery) or die("Error in the consult.." . mysqli_error($link));
