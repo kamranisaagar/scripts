@@ -176,7 +176,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		}
 
 $query="SELECT SUM(total) AS eft FROM payments p
-JOIN receipts r ON p.receipt = r.ID AND p.payment='card'
+JOIN receipts r ON p.receipt = r.ID AND p.payment in ('card','surcharge')
 
 WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
 WHERE dateend IS NOT NULL
