@@ -1,6 +1,6 @@
 <?php
 
-$query = "SELECT * FROM supplierpurchasedata where PURCHASEMONTH=4";
+$query = "SELECT * FROM supplierpurchasedata";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
