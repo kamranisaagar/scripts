@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 		$fields[]=$field;
 	}
 
-	$val[]=implode(",",$fields);
+	$val[]="(".implode(",",$fields).")";
 
 }
 
