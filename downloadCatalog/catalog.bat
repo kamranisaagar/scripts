@@ -1,0 +1,2 @@
+date /t >> datelog.txt
+
