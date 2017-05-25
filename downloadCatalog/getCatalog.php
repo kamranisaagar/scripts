@@ -78,6 +78,10 @@ $query = "insert ignore into categories(id,name,parentid) values {$values};";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
+$query = "update categories set parentid='ON-9' where categoryid like 'ON-%';";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
 //ReInit Arrays
 $val = array();
 $fields=array();
