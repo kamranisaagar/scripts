@@ -50,6 +50,38 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 $val = array();
 $fields=array();
 
+// Inserting Categories
+$query = "select categoryid,name,'ON-9' from categories";
+			  
+$result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
+
+while ($row = mysqli_fetch_assoc($result)) {	
+	
+	$fields=array();
+
+	foreach($row as $key => $value) {
+		if ($key == "name"){
+			$fields[]="\"-".$value."\"";
+		}
+		else{
+			$fields[]="\"".$value."\"";
+		}
+	}
+
+	$val[]="(".implode(",",$fields).")";
+
+}
+
+$values = implode(",", $val);
+
+$query = "insert ignore into categories(id,name,parentid) values {$values};";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+//ReInit Arrays
+$val = array();
+$fields=array();
+
 
 // Get Products
 $query = "SELECT CONCAT('ON-',barcode) as id, barcode as ref, barcode, CONCAT(product_name,'-') as product_name, cost, price/1.1 AS pricesell, CONCAT('ON-',categoryid) as categoryid, '001' as taxid, isVariable,CONCAT(product_name,'-') as display  FROM product;";
@@ -88,6 +120,10 @@ isvprice=VALUES(isvprice),
 display=VALUES(display);";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+//ReInit Arrays
+$val = array();
+$fields=array();
 
 
 // Showing Products in Catalog
