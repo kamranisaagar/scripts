@@ -86,7 +86,7 @@ $query = "update categories set parentid=null, catshowname=true where id='ON-9';
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid=null, catshowname=false where id not like='ON-%';";
+$query = "update categories set parentid=id, catshowname=false where id not like 'ON-%';";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
