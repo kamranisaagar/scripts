@@ -52,7 +52,7 @@ $fields=array();
 
 
 // Get Products
-$query = "SELECT CONCAT('ON-',barcode) as id, barcode as ref, barcode, CONCAT(product_name,'-') as product_name, cost, price/1.1 AS pricesell, CONCAT('ON-',categoryid) as categoryid, '001' as taxid, isVariable,CONCAT(product_name,'-') as display  FROM product where price > 0;";
+$query = "SELECT CONCAT('ON-',barcode) as id, barcode as ref, barcode, CONCAT(product_name,'-') as product_name, cost, price/1.1 AS pricesell, CONCAT('ON-',categoryid) as categoryid, '001' as taxid, isVariable,CONCAT(product_name,'-') as display  FROM product;";
 			  
 $result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
 
