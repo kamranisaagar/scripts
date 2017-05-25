@@ -78,7 +78,11 @@ $query = "insert ignore into categories(id,name,parentid) values {$values};";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid='ON-9' where categoryid like 'ON-%';";
+$query = "update categories set parentid='ON-9', catshowname=true where id like 'ON-%' and id <> 'ON-9';";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+$query = "update categories set parentid=null, catshowname=true where id='ON-9';";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
