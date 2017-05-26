@@ -90,6 +90,10 @@ $query = "update categories set parentid=id, catshowname=false where id not like
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
+$query = "delete from categories where id='ON-16';";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
 //ReInit Arrays
 $val = array();
 $fields=array();
