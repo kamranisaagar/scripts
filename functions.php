@@ -111,6 +111,11 @@ function getPaymentType($pString){
 	{
 		return "2";
 	}
+
+	else if($pString == "voucher")
+	{
+		return "4";
+	}
 	
 	else if($pString == "free")
 	{
@@ -146,7 +151,7 @@ $query="SELECT SUM(TICKETLINES.UNITS * TICKETLINES.PRICE*(1 + TAXES.RATE)) AS to
 
 FROM tickets 
 INNER JOIN receipts ON tickets.ID = receipts.ID
-INNER JOIN ticketlines ON tickets.ID = ticketlines.TICKET
+INNER JOIN ticketlines ON tickets.ID = ticketlines.TICKET and ticketlines.product='ON-cashoutbtn'
 INNER JOIN taxes ON taxes.ID = ticketlines.TAXID 
 
 JOIN (SELECT COUNT(total) AS cc FROM receipts r

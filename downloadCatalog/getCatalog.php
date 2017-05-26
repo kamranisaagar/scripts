@@ -170,7 +170,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 
 
 //Inserting Now
-$query = "Insert into products_cat(product) values {$values};";
+$query = "Insert ignore into products_cat(product) values {$values};";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
