@@ -51,7 +51,7 @@ $val = array();
 $fields=array();
 
 // Inserting Categories
-$query = "select categoryid,name,'ON-9' from categories";
+$query = "select concat('ON-',categoryid) as categoryid,name,'ON-9' from categories";
 			  
 $result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
 
@@ -78,7 +78,19 @@ $query = "insert ignore into categories(id,name,parentid) values {$values};";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid='ON-9', catshowname=true where id like 'ON-%' and id <> 'ON-9';";
+
+// Enabling all active categories
+$query = "select concat('ON-',categoryid) as categoryid from categories where isactive=1";
+			  
+$result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
+
+while ($row = mysqli_fetch_assoc($result)) {
+	$activeCategories[]="\"".$row['categoryid']."\"";
+}
+
+$activeCats=implode(",",$activeCategories);
+
+$query = "update categories set parentid='ON-9', catshowname=true where id in ({$activeCats})";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
@@ -86,11 +98,7 @@ $query = "update categories set parentid=null, catshowname=true where id='ON-9';
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid=id, catshowname=false where id not like 'ON-%';";
-
-$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
-
-$query = "delete from categories where id='ON-16';";
+$query = "update categories set parentid=id, catshowname=false where id not in ({$activeCats});";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
