@@ -143,7 +143,7 @@ TAXCAT=VALUES(TAXCAT),
 isvprice=VALUES(isvprice),
 display=VALUES(display);";
 
-$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+$result = $link->query($query) or die("Error in the consult1.." . mysqli_error($link));
 
 //ReInit Arrays
 $val = array();
@@ -166,12 +166,15 @@ $values = implode(",", $productIds);
 //Truncate
 $query = "TRUNCATE TABLE products_cat";
 
-$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+$result = $link->query($query) or die("Error in the consult2.." . mysqli_error($link));
 
 
 //Inserting Now
-$query = "Insert ignore into products_cat(product) values {$values};";
+$query = "SET FOREIGN_KEY_CHECKS = 0;
+SELECT @@FOREIGN_KEY_CHECKS;
+Insert ignore into products_cat(product) values {$values};
+SET FOREIGN_KEY_CHECKS = 1;";
 
-$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+$result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_error($link));
 
 ?>
