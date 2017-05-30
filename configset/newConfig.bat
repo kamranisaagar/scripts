@@ -1,3 +1,5 @@
+Taskkill /IM javaw.exe /F
+
 echo "Setting Configuration"
 del C:\Unicenta\unicentaopos.properties
 
