@@ -18,10 +18,11 @@ function putTransactionLog($storeid) {
     global $link;
 	global $link2;
 
-    $query = "SELECT r.id AS receiptid,r.datenew AS newtstamp,p.payment AS ptype,sum(p.total) AS total FROM receipts r
+    $query = "SELECT r.id AS receiptid, t.ticketid AS ticketid, r.datenew AS newtstamp,p.payment AS ptype,SUM(p.total) AS total FROM receipts r
 			  JOIN payments p ON p.receipt=r.ID
+			  JOIN tickets t ON t.id=r.id
 			  WHERE r.id NOT IN (SELECT transid FROM mpulse.translog)
-			  group by r.id";
+			  GROUP BY r.id";
 			  
     $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
     $output = array();
@@ -32,18 +33,19 @@ function putTransactionLog($storeid) {
 		
 		
 		$transactionid=$storeid."||".$row['receiptid'];
+		$ticketid=$row['ticketid'];
 		$timestamp = $row['newtstamp'];
 		$transtypeid = getPaymentType($row['ptype']);
 		$total = $row['total'];
 		
-		$transactionValues[]="('$transactionid','$storeid','$timestamp','$transtypeid','$total')";
+		$transactionValues[]="('$transactionid','$ticketid','$storeid','$timestamp','$transtypeid','$total')";
     }
 	
 	$implodedTransactions = implode(',',$transactionValues);
 	
 	if (count($transactionValues)>0){
 	// Dump All Transactions
-	$query = "insert ignore into transaction(transid,storeid,timestamp,transtypeid,total) values $implodedTransactions";  
+	$query = "insert ignore into transaction(transid,ticketid,storeid,timestamp,transtypeid,total) values $implodedTransactions";  
 	$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));	
 	}
 	
@@ -151,11 +153,12 @@ $query="SELECT SUM(TICKETLINES.UNITS * TICKETLINES.PRICE*(1 + TAXES.RATE)) AS to
 
 FROM tickets 
 INNER JOIN receipts ON tickets.ID = receipts.ID
+INNER JOIN payments p ON receipts.id=p.receipt AND payment IN ('card','cash','surcharge')
 INNER JOIN ticketlines ON tickets.ID = ticketlines.TICKET and ticketlines.product<>'ON-cashoutbtn'
 INNER JOIN taxes ON taxes.ID = ticketlines.TAXID 
 
 JOIN (SELECT COUNT(total) AS cc FROM receipts r
-JOIN payments p ON r.id=p.receipt
+JOIN payments p ON r.id=p.receipt AND payment IN ('card','cash','surcharge')
 WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
 WHERE dateend IS NOT NULL
 ORDER BY datestart DESC)
