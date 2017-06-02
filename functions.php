@@ -153,12 +153,12 @@ $query="SELECT SUM(TICKETLINES.UNITS * TICKETLINES.PRICE*(1 + TAXES.RATE)) AS to
 
 FROM tickets 
 INNER JOIN receipts ON tickets.ID = receipts.ID
-INNER JOIN payments p ON receipts.id=p.receipt AND payment IN ('card','cash','surcharge')
+INNER JOIN payments p ON receipts.id=p.receipt AND payment not IN ('voucher','cheque','free')
 INNER JOIN ticketlines ON tickets.ID = ticketlines.TICKET and ticketlines.product<>'ON-cashoutbtn'
 INNER JOIN taxes ON taxes.ID = ticketlines.TAXID 
 
 JOIN (SELECT COUNT(total) AS cc FROM receipts r
-JOIN payments p ON r.id=p.receipt AND payment IN ('card','cash','surcharge')
+JOIN payments p ON r.id=p.receipt AND payment not IN ('voucher','cheque','free')
 WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
 WHERE dateend IS NOT NULL
 ORDER BY datestart DESC)
