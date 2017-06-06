@@ -170,7 +170,7 @@ FROM payments p
 
 JOIN receipts r ON p.receipt = r.id
 
-WHERE r.money= '$money'";
+WHERE r.money= '$money' and p.payment not in ('voucher','cheque','free')";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
