@@ -148,41 +148,54 @@ function markTransactions($transactionids){
 function postCash($storeid){
     global $link;
 	global $link2;
-	
-$query="SELECT SUM(TICKETLINES.UNITS * TICKETLINES.PRICE*(1 + TAXES.RATE)) AS total, t.cc, CURDATE() AS date
 
-FROM tickets 
-INNER JOIN receipts ON tickets.ID = receipts.ID
-INNER JOIN payments p ON receipts.id=p.receipt AND payment not IN ('voucher','cheque','free')
-INNER JOIN ticketlines ON tickets.ID = ticketlines.TICKET and ticketlines.product<>'ON-cashoutbtn'
-INNER JOIN taxes ON taxes.ID = ticketlines.TAXID 
+// Getting Last CloseCash ID
 
-JOIN (SELECT COUNT(total) AS cc FROM receipts r
-JOIN payments p ON r.id=p.receipt AND payment not IN ('voucher','cheque','free')
-WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
-WHERE dateend IS NOT NULL
-ORDER BY datestart DESC)
-AND datenew <= (SELECT MAX(dateend) FROM closedcash
-WHERE dateend IS NOT NULL
-ORDER BY datestart DESC)) AS t
+$query="SELECT money FROM closedcash WHERE HOST='TSG'
 
+AND datestart=(SELECT MAX(datestart) FROM closedcash
 
-WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
-WHERE dateend IS NOT NULL
-ORDER BY datestart DESC)
-AND datenew <= (SELECT MAX(dateend) FROM closedcash
-WHERE dateend IS NOT NULL
-ORDER BY datestart DESC)";
+WHERE dateend IS NOT NULL)";
 
-$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));	
-	
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
 	while ($row = mysqli_fetch_assoc($result)) {
-		
+		$money= $row['money'];
+		}
+	
+//Getting Customer Count and Totals	
+$query="SELECT SUM(p.total) as total, COUNT(r.id) as cc, curdate() as date
+
+FROM payments p
+
+JOIN receipts r ON p.receipt = r.id
+
+WHERE r.money= '$money'";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+while ($row = mysqli_fetch_assoc($result)) {		
 		$total= $row['total'];
 		$customerCount = $row['cc'];
 		$date = $row['date'];
 		}
 
+// Getting Cashout Amount
+$query="SELECT SUM(price*(0.1+1)) AS cashout FROM ticketlines tl
+JOIN receipts r ON r.id=tl.ticket
+WHERE r.money= '$money' AND tl.product='ON-cashoutbtn'";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		
+		$cashout= $row['cashout'];
+		}
+
+//Adjusting Total Sale
+$total=$total-$cashout;						
+
+//Getting EFT
 $query="SELECT SUM(total) AS eft FROM payments p
 JOIN receipts r ON p.receipt = r.ID AND p.payment in ('card','surcharge')
 
@@ -199,7 +212,6 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		
 		$eftpos= $row['eft'];
 		}
-
 
 // Dump the record
 	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,eftpos,date) values ('$total','$customerCount','$storeid','$eftpos','$date')";
