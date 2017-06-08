@@ -21,12 +21,4 @@ $totalCount= count($processedTransactions);
 
 echo "\r\n"."Transactions Uploaded: ".$totalCount."\r\n";
 
-$date=getmyDate();
-$day = strtotime($date);
-$dayVal= date("d", $day);
-
-if ($dayVal=="19"){
-	require_once('getPurchaseData.php');
-}
-
 ?>
