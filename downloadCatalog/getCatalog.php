@@ -2,11 +2,7 @@
 
 $link3 = mysqli_connect("104.131.184.100","saagar","saagar12","product_catalog") or die("Error Making Connection" . mysqli_error($link2)); // MerchantPulse Link
 
-require_once('../functions.php');
-
-$storeinfo = parse_ini_file("../../storeinfo.ini");
-
-$storeid=$storeinfo['storeid'];
+require_once('c:/mpulse/scripts/functions.php');
 
 //Get Promotions
 

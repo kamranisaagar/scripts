@@ -2,6 +2,10 @@
 
 require_once('c:/mpulse/assets/db.php');
 
+$storeinfo = parse_ini_file("c:/mpulse/storeinfo.ini");
+
+$storeid=$storeinfo['storeid'];
+
 $products = getAllProducts();
 	
 function getmyDate() {

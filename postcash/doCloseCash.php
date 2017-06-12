@@ -1,6 +1,6 @@
 <?php
 
-require_once('../functions.php');
+require_once('c:/mpulse/scripts/functions.php');
 
 $currentTime=getmyTimeStamp();
 $currentSequence = getSequenceNumber();
@@ -13,7 +13,10 @@ $uniqueID = md5(uniqid());
 if ($count > 0){
 updateRecord();
 insertRecord();
-updateProperties();	
+updateProperties();
+
+// Post Close Shift
+postCash($storeid);	
 }
 
 else {

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../functions.php');
+require_once('c:/mpulse/scripts/functions.php');
 require_once('roles.php');
 require_once('vproducts.php');
 
