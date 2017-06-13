@@ -47,6 +47,8 @@ function putTransactionLog($storeid) {
 		$transactionValues[]="('$transactionid','$ticketid','$storeid','$timestamp','$transtypeid','$total')";
 
 		// Collecting IntraStore Transactions
+		$intrastorepool = array();
+
 		if ($transtypeid == '4'){
 			$intrastorepool[]=$transactionid;
 		}
@@ -60,7 +62,10 @@ function putTransactionLog($storeid) {
 	$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));	
 	}
 
-	pushIntraStoreTransactions($intrastorepool);
+	//Sending IntraStore Transactions
+	if (!empty($intrastorepool)){
+		pushIntraStoreTransactions($intrastorepool);
+	}
 }
 
 function putTransactionLine($storeid) {
