@@ -6,6 +6,8 @@ $storeinfo = parse_ini_file("c:/mpulse/storeinfo.ini");
 
 $storeid=$storeinfo['storeid'];
 
+$timestamp=getmyTimeStamp();
+
 $products = getAllProducts();
 	
 function getmyDate() {
@@ -43,6 +45,11 @@ function putTransactionLog($storeid) {
 		$total = $row['total'];
 		
 		$transactionValues[]="('$transactionid','$ticketid','$storeid','$timestamp','$transtypeid','$total')";
+
+		// Collecting IntraStore Transactions
+		if ($transtypeid == '4'){
+			$intrastorepool[]=$transactionid;
+		}
     }
 	
 	$implodedTransactions = implode(',',$transactionValues);
@@ -52,7 +59,8 @@ function putTransactionLog($storeid) {
 	$query = "insert ignore into transaction(transid,ticketid,storeid,timestamp,transtypeid,total) values $implodedTransactions";  
 	$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));	
 	}
-	
+
+	pushIntraStoreTransactions($intrastorepool);
 }
 
 function putTransactionLine($storeid) {
@@ -260,4 +268,19 @@ function getAllProducts(){
 		}	
 	
 return $products;	
+}
+
+function pushIntraStoreTransactions($transactionids){
+	global $link;
+	global $storeid;
+	global $timestamp;
+	
+	foreach ($transactionids as $transactionid){
+	
+		// Record Insertion
+			$query = "insert ignore into intrastorepool($transid, $sender, $datetime) values ('$transactionid','$storeid','$timestamp')";
+			  
+			$result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));		
+	}
+
 }
