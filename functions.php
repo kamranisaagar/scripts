@@ -34,6 +34,7 @@ function putTransactionLog($storeid) {
     $output = array();
 	
 	$transactionValues = array();
+	$intrastorepool = array();
 	
     while ($row = mysqli_fetch_assoc($result)) {
 		
@@ -47,8 +48,6 @@ function putTransactionLog($storeid) {
 		$transactionValues[]="('$transactionid','$ticketid','$storeid','$timestamp','$transtypeid','$total')";
 
 		// Collecting IntraStore Transactions
-		$intrastorepool = array();
-
 		if ($transtypeid == '4'){
 			$intrastorepool[]=$transactionid;
 		}
@@ -276,14 +275,14 @@ return $products;
 }
 
 function pushIntraStoreTransactions($transactionids){
-	global $link;
+	global $link2;
 	global $storeid;
 	global $timestamp;
 	
 	foreach ($transactionids as $transactionid){
 	
 		// Record Insertion
-			$query = "insert ignore into intrastorepool($transid, $sender, $datetime) values ('$transactionid','$storeid','$timestamp')";
+			$query = "insert ignore into intrastorepool(transid, sender, datetime) values ('$transactionid','$storeid','$timestamp')";
 			  
 			$result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));		
 	}
