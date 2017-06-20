@@ -288,3 +288,18 @@ function pushIntraStoreTransactions($transactionids){
 	}
 
 }
+
+
+function getTSGID($storeid){
+	global $link2;
+		
+	//Get Franchise ID
+	$query = "select * from store where storeid={$storeid}";
+			
+	$result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
+
+		while ($row = mysqli_fetch_assoc($result)) {
+			$franchiseid=$row['tsgid'];
+		}
+	return $franchiseid;
+}		

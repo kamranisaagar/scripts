@@ -1,9 +1,9 @@
 Taskkill /IM javaw.exe /F
 
-echo "Setting Configuration"
+echo "Setting Properties"
 
 cd C:/mpulse/scripts/configset/
 
-rem "C:\mpulse\assets\php_compiler\php5.4.16\php.exe" transUpdate.php >> updatelog.txt
+"C:\mpulse\assets\php_compiler\php5.4.16\php.exe" setProperties.php
 
 exit
