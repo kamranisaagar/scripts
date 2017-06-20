@@ -5,7 +5,7 @@ require_once('c:/mpulse/scripts/functions.php');
 $tsgid=getTSGID($storeid);
 
 $propertiesFile="#unicentaopos.properties
-#Tue Jun 20 08:01:58 AEST 2017
+#Mon Jun 19 19:47:55 AEST 2017
 db.URL=jdbc\:mysql\://localhost\:3306/unicenta
 db.driver=com.mysql.jdbc.Driver
 db.driverlib=C\:\\\Unicenta\\\lib\\\mysql-connector-java-5.1.40-bin.jar
@@ -19,11 +19,12 @@ format.double=
 format.integer=
 format.percent=
 format.time=
-machine.display=screen
+ill.marineoption=false
+machine.display=window
 machine.hostname=TSG
 machine.priceboarddisplay=Not Defined
-machine.printer=epson\:file,COM7
-machine.printer.2=Not defined
+machine.printer=epson\:file,COM8
+machine.printer.2=epson\:file,COM8
 machine.printer.3=Not defined
 machine.printer.4=screen
 machine.printer.5=screen
@@ -60,7 +61,6 @@ screensaver.enable=true
 screensaver.picturesfolder=C\:\\\Uniback\\\Seafile\\\TSG Install\\\Unicenta\\\images
 screensaver.timeout=300
 screensaver.transitiontime=30
-se=
 splashscreen.picturesfolder=C\:\\\Uniback\\\Seafile\\\TSG Install\\\Unicenta\\\splashscreenimages
 splashscreen.transitiontime=30
 start.logo=C\:\\\Uniback\\\Seafile\\\TSG Install\\\Unicenta\\\start\\\Logo.png
@@ -96,7 +96,8 @@ tsg.updateinterval=60
 user.country=AU
 user.language=en
 user.locale=English (Australia)
-user.variant=";
+user.variant=
+";
 
 $filename="C:\Unicenta\unicentaopos.properties";
 
