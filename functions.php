@@ -9,6 +9,8 @@ $storeid=$storeinfo['storeid'];
 $timestamp=getmyTimeStamp();
 
 $products = getAllProducts();
+
+$currentDate=getmyDate();
 	
 function getmyDate() {
     date_default_timezone_set("Australia/Canberra");
@@ -186,7 +188,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 		}
 
 // Getting Cashout Amount
-$query="SELECT SUM(price*(0.1+1)) AS cashout FROM ticketlines tl
+$query="SELECT SUM(price) AS cashout FROM ticketlines tl
 JOIN receipts r ON r.id=tl.ticket
 WHERE r.money= '$money' AND tl.product='ON-cashoutbtn'";
 
