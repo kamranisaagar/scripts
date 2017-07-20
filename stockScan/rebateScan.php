@@ -1,6 +1,7 @@
 <?php
 
 require_once('c:/mpulse/scripts/functions.php');
+require_once('c:/mpulse/scripts/stockScan/writeTrans.php');
 
 
 $currentDate="2017-08-06";
@@ -37,10 +38,8 @@ foreach ($subcats as $subcat => $startdate){
 
 }
 
-print_r($sales);
-print_r($purchase);
-print_r($toScan);
-
+pushToPOS($toScan);
+//emailItems($toScan);
 
 function getProductSaleSticks($barcode,$startdate){
 	global $link;
