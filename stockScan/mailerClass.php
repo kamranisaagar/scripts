@@ -7,10 +7,12 @@
 	 global $storeid;
 	 global $storename;
 	 
+	 $toArray= explode(",",$to);
+	 
 	 $itemsString ="";
 	 foreach ($items as $barcode => $qty){
 		 $name=key(getProductID($barcode));
-		 $itemsString .= "<b>".$name."</b>".": ".$qty."<br>";
+		 $itemsString .= $name.": ".$qty."<br>";
 	 }
  
     $mail = new PHPMailer();
@@ -24,11 +26,13 @@
     $mail->Port = "465";
  
     $mail->setFrom('mpulseremote@gmail.com', 'MerchantPulse');
-    $mail->AddAddress($to, 'Mpulse Subscriber');
+    foreach ($toArray as $receiver){
+		$mail->AddAddress($receiver, 'Mpulse Subscriber');	
+	}
  
     $mail->Subject  =  "Items Scanned {$timestamp} - {$storename}";
     $mail->IsHTML(true);
-    $mail->Body    = "<b>Hello, <br>following items have been scanned:</b>,
+    $mail->Body    = "<b>Hello, <br>Following items have been scanned:</b>,
                         <br /> {$itemsString}
                         ";
   
