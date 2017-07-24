@@ -5,10 +5,12 @@
  function emailItems($to, $items) {
 	 global $timestamp;
 	 global $storeid;
+	 global $storename;
+	 
 	 $itemsString ="";
 	 foreach ($items as $barcode => $qty){
 		 $name=key(getProductID($barcode));
-		 $itemsString .= $name.": ".$qty."<br>";
+		 $itemsString .= "<b>".$name."</b>".": ".$qty."<br>";
 	 }
  
     $mail = new PHPMailer();
@@ -24,9 +26,9 @@
     $mail->setFrom('mpulseremote@gmail.com', 'MerchantPulse');
     $mail->AddAddress($to, 'Mpulse Subscriber');
  
-    $mail->Subject  =  "Items Scanned {$timestamp} - {$storeid}";
+    $mail->Subject  =  "Items Scanned {$timestamp} - {$storename}";
     $mail->IsHTML(true);
-    $mail->Body    = "Following items have been scanned ,
+    $mail->Body    = "<b>Hello, <br>following items have been scanned:</b>,
                         <br /> {$itemsString}
                         ";
   

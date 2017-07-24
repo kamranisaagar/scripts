@@ -39,8 +39,14 @@ foreach ($subcats as $subcat => $startdate){
 
 }
 
-pushToPOS($toScan);
-emailItems("sindhizpty@gmail.com",$toScan);
+if (count($toScan) > 0){
+	pushToPOS($toScan);
+	emailItems($companyemail,$toScan);
+}
+
+else {
+	"No Stock to be scanned.";
+}
 
 function getProductSaleSticks($barcode,$startdate){
 	global $link;

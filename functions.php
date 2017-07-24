@@ -6,6 +6,10 @@ $storeinfo = parse_ini_file("c:/mpulse/storeinfo.ini");
 
 $storeid=$storeinfo['storeid'];
 
+$storename=getStoreName($storeid);
+
+$companyemail=getStakeholderEmail($storeid);
+
 $timestamp=getmyTimeStamp();
 
 $products = getAllProducts();
@@ -277,4 +281,32 @@ function getTSGID($storeid){
 			$franchiseid=$row['tsgid'];
 		}
 	return $franchiseid;
+}
+
+function getStoreName($storeid) {
+    global $link2;
+
+    $name;
+    $query_storename = "
+		Select storename from store where storeid=\"$storeid\"";
+
+    $storename_result = $link2->query($query_storename) or die("Error in the consult2.." . mysqli_error($link2));
+    while ($row_storename = mysqli_fetch_assoc($storename_result)) {
+        $name = $row_storename['storename'];
+    }
+    return $name;
+}
+
+function getStakeholderEmail($storeid) {
+    global $link2;
+
+    $email;
+    $query_companyemail = "
+		Select companyemail from company c join store s on c.companyid=s.companyid and s.storeid=\"$storeid\"";
+
+    $companyemail_result = $link2->query($query_companyemail) or die("Error in the consult2.." . mysqli_error($link2));
+    while ($row_email = mysqli_fetch_assoc($companyemail_result)) {
+        $email = $row_email['companyemail'];
+    }
+    return $email;
 }		
