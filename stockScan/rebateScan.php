@@ -26,7 +26,9 @@ foreach ($subcats as $subcat => $startdate){
 	foreach ($subcatParents as $key => $barcode){
 	$sales[$barcode]=getProductSaleSticks($barcode,$startdate)/$subcatProfile[$subcat];
 	$purchase[$barcode]=getProductPurchaseSticks($barcode,$startdate)/$subcatProfile[$subcat];
-
+	
+	$toScan = array();
+	
 	$toScan[$barcode]=ceil($purchase[$barcode]-$sales[$barcode]);
 
 		if ($toScan[$barcode] <= 0){
@@ -54,7 +56,7 @@ function getProductSaleSticks($barcode,$startdate){
 $query="SELECT SUM(tl.units*sticks) as sticks FROM receipts r
 JOIN ticketlines tl ON r.id=tl.ticket
 JOIN products p ON p.id=tl.product
-WHERE datenew >='$startdate' AND datenew <='$currentDate' AND (p.code='$barcode' 
+WHERE date(datenew) >='$startdate' AND date(datenew) <='$currentDate' AND (p.code='$barcode' 
 OR 
 p.code = (SELECT p.code AS child FROM products p
 JOIN products pp ON p.reference=pp.sub_product AND pp.category='001' AND pp.code='$barcode'))";
