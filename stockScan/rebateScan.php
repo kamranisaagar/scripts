@@ -14,6 +14,7 @@ $subcats=array();
 $subcatProfile=getSubcatSticks();
 $parents=array();
 $parents=getParents();
+$toScan = array();
 
 
 while ($row = mysqli_fetch_assoc($result)) {
@@ -26,8 +27,6 @@ foreach ($subcats as $subcat => $startdate){
 	foreach ($subcatParents as $key => $barcode){
 	$sales[$barcode]=getProductSaleSticks($barcode,$startdate)/$subcatProfile[$subcat];
 	$purchase[$barcode]=getProductPurchaseSticks($barcode,$startdate)/$subcatProfile[$subcat];
-	
-	$toScan = array();
 	
 	$toScan[$barcode]=ceil($purchase[$barcode]-$sales[$barcode]);
 
