@@ -16,29 +16,10 @@ $parents=array();
 $parents=getParents();
 $toScan = array();
 
-/*
+
 while ($row = mysqli_fetch_assoc($result)) {
 	$subcats[$row['articlecategory']]=$row['startdate'];
 }
-*/
-
-$subcats['BON40']="2017-07-31";
-$subcats['BON25']="2017-07-31";
-$subcats['CHS20']="2017-07-31";
-$subcats['LB30N']="2017-07-31";
-$subcats['LBM30']="2017-07-31";
-$subcats['LB40N']="2017-07-31";
-$subcats['MAR20']="2017-07-31";
-$subcats['MAR25']="2017-07-31";
-$subcats['MARCL']="2017-07-31";
-$subcats['PJ30N']="2017-07-31";
-$subcats['PJHBD']="2017-07-31";
-$subcats['CHRO2']="2017-07-31";
-$subcats['LBTO2']="2017-07-31";
-$subcats['CRT20']="2017-07-31";
-$subcats['PJ40N']="2017-07-31";
-$subcats['PJ30C']="2017-07-31";
-$subcats['PJH2X']="2017-07-31";
 
 foreach ($subcats as $subcat => $startdate){
 	$subcatParents=array_keys($parents, $subcat);
