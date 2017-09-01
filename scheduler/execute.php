@@ -9,5 +9,3 @@ $dayVal= date("d", $day);
 if ($dayVal=="5"){
 	require_once('getPurchaseData.php');
 }
-
-require_once('create_recall_trigger.php');
