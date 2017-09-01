@@ -5,7 +5,11 @@ require_once('c:/mpulse/scripts/stockScan/writeTrans.php');
 require_once('c:/mpulse/scripts/stockScan/mailerClass.php');
 
 
-$query = "SELECT articlecategory, startdate, enddate FROM promo_header WHERE date(enddate)='$currentDate' AND TYPE=1 AND remote='ACKNOWLEDGED';";
+$query = "SELECT articlecategory, startdate, enddate FROM promo_header WHERE DATE(enddate)='$currentDate' AND TYPE=1 AND remote='ACKNOWLEDGED'
+
+UNION
+
+SELECT subcat, startdate,enddate FROM mpulse.recalled_promotions WHERE DATE(enddate) = '$currentDate';";
 
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
