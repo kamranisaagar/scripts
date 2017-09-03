@@ -181,7 +181,7 @@ $result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_e
 $allowedStores=[4,1,6,22,19,23];
 
 if (in_array($storeid, $allowedStores) and $currentDate=='2017-09-04' ) {
-	require_once('price_rise.php');
+	//require_once('price_rise.php');
 }
 
 
