@@ -4,6 +4,9 @@ $link3 = mysqli_connect("104.131.184.100","saagar","saagar12","product_catalog")
 
 require_once('c:/mpulse/scripts/functions.php');
 
+$query = "DROP TRIGGER /*!50032 IF EXISTS */ `recall_trigger`";
+$result = $link->query($query) or die("Error in the consult3.." . mysqli_error($link));
+
 //Get Promotions
 
 $query = "SELECT CONCAT('ON',p.promoid) as promoid, promoname, DATE_FORMAT(startdate,'%Y%m%d') as startdate, 
