@@ -1,10 +1,12 @@
 <?php
 
-require_once('c:/mpulse/assets/db.php');
+$connection= is_connected();
 
 if ($connection == false) {
 exit("Unable to connect to internet");
 }
+
+require_once('c:/mpulse/assets/db.php');
 
 $storeinfo = parse_ini_file("c:/mpulse/storeinfo.ini");
 

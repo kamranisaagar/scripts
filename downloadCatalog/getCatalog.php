@@ -1,8 +1,7 @@
 <?php
+require_once('c:/mpulse/scripts/functions.php');
 
 $link3 = mysqli_connect("104.131.184.100","saagar","saagar12","product_catalog") or die("Error Making Connection" . mysqli_error($link2)); // MerchantPulse Link
-
-require_once('c:/mpulse/scripts/functions.php');
 
 //Get Promotions
 
