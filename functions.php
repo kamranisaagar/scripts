@@ -319,12 +319,11 @@ function getStakeholderEmail($storeid) {
 
 function is_connected()
 {
-  $connected = fopen("http://www.google.com:80/","r");
-  if($connected)
-  {
-     return true;
-  } else {
-   return false;
-  }
-
-}		
+    // use 80 for http or 443 for https protocol
+    $connected = @fsockopen("www.google.com", 80);
+    if ($connected){
+        fclose($connected);
+        return true; 
+    }
+    return false;
+}	
