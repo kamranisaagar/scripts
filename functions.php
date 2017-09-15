@@ -2,6 +2,10 @@
 
 require_once('c:/mpulse/assets/db.php');
 
+if ($connection == false) {
+exit("Unable to connect to internet");
+}
+
 $storeinfo = parse_ini_file("c:/mpulse/storeinfo.ini");
 
 $storeid=$storeinfo['storeid'];
@@ -309,4 +313,16 @@ function getStakeholderEmail($storeid) {
         $email = $row_email['companyemail'];
     }
     return $email;
+}
+
+function is_connected()
+{
+  $connected = fopen("http://www.google.com:80/","r");
+  if($connected)
+  {
+     return true;
+  } else {
+   return false;
+  }
+
 }		
