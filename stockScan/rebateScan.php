@@ -82,7 +82,7 @@ function getProductPurchaseSticks($barcode,$startdate){
 $query="SELECT p.subcat,ROUND(SUM(dl.qty*p.sticks/pr.maxsticks)*pr.maxsticks,2) AS sticks 
 FROM storeops.deliveryline dl
 JOIN storeops.delivery d ON d.deliveryid=dl.deliveryid AND d.isinvoice=1
-join storeops.invoices i on i.invoicenumber=d.invoicenumber
+join storeops.invoices i on i.invoiceid=d.invoiceid
 JOIN storeops.product p ON p.productid=dl.productid
 JOIN storeops.productcat pr ON pr.subcat=p.subcat
 WHERE  d.storeid='$storeid' AND DATE(i.deliverydate) >= '$startdate' AND DATE(i.deliverydate) <= '$currentDate' AND p.barcode='$barcode'
