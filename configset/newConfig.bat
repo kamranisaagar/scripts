@@ -8,7 +8,6 @@ cd C:/mpulse/scripts/configset/
 
 "C:\mpulse\assets\php_compiler\php5.4.16\php.exe" setConfig.php
 
-del C:\unicenta\unicenta.jar
-copy "unicenta.jar" "C:\unicenta\unicenta.jar" 
+"C:\mpulse\assets\php_compiler\php5.4.16\php.exe" setPercentages.php
 
 exit
