@@ -231,7 +231,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		}
 
 // Dump the record
-	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,eftpos,date) values ('$total','$customerCount','$storeid','$eftpos','$date')";
+	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,date) values ('$total','$customerCount','$storeid','$date')";
 		$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 		
 echo "Please wait...";
