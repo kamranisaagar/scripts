@@ -1,9 +1,5 @@
 Taskkill /IM javaw.exe /F
 
-del "C:\mpulse\assets\db.php"
-
-copy "C:\mpulse\scripts\temp\db.php" "C:\mpulse\assets\db.php"
-
 echo "Setting Properties"
 
 cd C:/mpulse/scripts/configset/
