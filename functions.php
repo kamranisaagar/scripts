@@ -165,6 +165,10 @@ function markTransactions($transactionids){
 function postCash($storeid){
     global $link;
 	global $link2;
+	$eftpos=0;
+	$wsamount=0;
+	$ssamount=0;
+	$osamount=0;
 
 // Getting Last CloseCash ID
 
@@ -210,7 +214,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		}
 
 //Adjusting Total Sale
-$total=$total-$cashout;						
+$total=$total-$cashout;					
 
 //Getting EFT
 $query="SELECT SUM(total) AS eft FROM payments p
@@ -230,8 +234,62 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		$eftpos= $row['eft'];
 		}
 
+//Getting WSAmount
+$query="SELECT SUM(total) AS wsamount FROM payments p
+JOIN receipts r ON p.receipt = r.ID AND p.payment in ('cheque')
+
+WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)
+AND datenew <= (SELECT MAX(dateend) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		
+		$wsamount= $row['wsamount'];
+		}
+
+//Getting OtherStore Amount
+$query="SELECT SUM(total) AS osamount FROM payments p
+JOIN receipts r ON p.receipt = r.ID AND p.payment in ('voucher')
+
+WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)
+AND datenew <= (SELECT MAX(dateend) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		
+		$osamount= $row['osamount'];
+		}
+
+//Getting StockScan
+$query="SELECT SUM(total) AS ssamount FROM payments p
+JOIN receipts r ON p.receipt = r.ID AND p.payment in ('free')
+
+WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)
+AND datenew <= (SELECT MAX(dateend) FROM closedcash
+WHERE dateend IS NOT NULL
+ORDER BY datestart DESC)";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		
+		$ssamount= $row['ssamount'];
+		}						
+
 // Dump the record
-	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,date) values ('$total','$customerCount','$storeid','$date')";
+	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,date,wsamount,osamount,ssamount) values ('$total','$customerCount','$storeid','$date','$wsamount','$osamount','$ssamount')";
 		$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 		
 echo "Please wait...";
