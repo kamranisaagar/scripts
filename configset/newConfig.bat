@@ -2,7 +2,7 @@ Taskkill /IM javaw.exe /F
 
 echo "Setting Properties"
 
-rem cd C:/mpulse/scripts/configset/
+cd C:/mpulse/scripts/configset/
 
 rem "C:\mpulse\assets\php_compiler\php5.4.16\php.exe" setProperties.php
 
