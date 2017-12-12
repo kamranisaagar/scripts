@@ -40,7 +40,7 @@ ON DUPLICATE KEY UPDATE
 	REMOTE=VALUES(REMOTE);";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));	
-
+/*
 //ReInit Arrays
 $val = array();
 $fields=array();
@@ -172,6 +172,6 @@ SET FOREIGN_KEY_CHECKS = 1;";
 
 $result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_error($link));
 
-
+*/
 
 ?>
