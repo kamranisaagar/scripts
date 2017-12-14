@@ -1,7 +1,7 @@
 <?php
 require_once('c:/mpulse/scripts/functions.php');
 
-$comapnyid=getCompanyId($storeid);
+$companyid=getCompanyId($storeid);
 
 //Get Promotions
 
@@ -40,13 +40,13 @@ ON DUPLICATE KEY UPDATE
 	REMOTE=VALUES(REMOTE);";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));	
-/*
+
 //ReInit Arrays
 $val = array();
 $fields=array();
 
 // Inserting Categories
-$query = "select categoryid as categoryid,categoryname,'ON-9' from category where companyid={$comapnyid}";
+$query = "select categoryid as categoryid,categoryname,'ON-9' from category where companyid={$companyid}";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
@@ -54,6 +54,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 	
 	$fields=array();
 
+	
 	foreach($row as $key => $value) {
 		$fields[]="\"".$value."\"";
 	}
@@ -70,7 +71,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 
 
 // Enabling all active categories
-$query = "select categoryid as categoryid from category where isvisible=1";
+$query = "select categoryid as categoryid from category where isvisible=1 and companyid={$companyid}";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
@@ -98,7 +99,7 @@ $fields=array();
 
 
 // Get Products
-$query = "SELECT productid as id, productid as ref, barcode, productname as productname, cost, price/1.1 AS pricesell, categoryid as categoryid, taxid as taxid, isvariable,productname as display  FROM product p
+$query = "SELECT productid as id, productid as ref, barcode, productname as productname, cost, saleprice/1.1 AS pricesell, p.categoryid as categoryid, taxid as taxid, isvariable,productname as display  FROM product p
 join category c on c.categoryid=p.categoryid and c.companyid={$companyid};";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
@@ -132,8 +133,8 @@ CATEGORY=VALUES(CATEGORY),
 NAME=VALUES(NAME),
 TAXCAT=VALUES(TAXCAT),
 isvprice=VALUES(isvprice),
-display=VALUES(display)
-reference=VALUES(reference);";
+display=VALUES(display),
+REFERENCE=VALUES(REFERENCE);";
 
 $result = $link->query($query) or die("Error in the consult1.." . mysqli_error($link));
 
@@ -169,6 +170,5 @@ SET FOREIGN_KEY_CHECKS = 1;";
 
 $result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_error($link));
 
-*/
 
 ?>
