@@ -79,7 +79,7 @@ function putTransactionLine($storeid) {
 	
 	$transactionValues = array();
 
-    $query = "SELECT tl.ticket as receiptid  ,p.code,units,(tl.price*t.rate)+(tl.price) AS price FROM ticketlines tl
+    $query = "SELECT tl.ticket as receiptid  ,p.reference,units,(tl.price*t.rate)+(tl.price) AS price FROM ticketlines tl
 				JOIN products p ON p.id=tl.product
 				JOIN taxes t ON t.id=tl.taxid
 
@@ -88,17 +88,17 @@ function putTransactionLine($storeid) {
     $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
     while ($row = mysqli_fetch_assoc($result)) {
-        $barcode = $row['code'];
+        $reference = $row['reference'];
 		$qty = $row['units'];
 		$price = $row['price'];
 		$transactionid=$storeid."||".$row['receiptid'];
 		$output[] = $row['receiptid'];
 		
-		$transactionValues[]="('$transactionid','$barcode','$qty','$price')";
+		$transactionValues[]="('$transactionid','$reference','$qty','$price')";
 		
 		//Checking if transaction is suspicious
-		if (isset($products[$barcode])){
-			if (($products[$barcode] - $price) > 0.1){
+		if (isset($products[$reference])){
+			if (($products[$reference] - $price) > 0.1){
 				$flaggedTrans[]="('$transactionid')";
 			}
 		}
@@ -108,7 +108,7 @@ function putTransactionLine($storeid) {
     $implodedTransactions = implode(',',$transactionValues);
 		if (count($transactionValues)>0){
 	
-			$query = "insert ignore into transline (transid,barcode,qty,price) values $implodedTransactions";
+			$query = "insert ignore into transline (transid,productid,qty,price) values $implodedTransactions";
 			$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 		}
 	
@@ -384,4 +384,17 @@ function is_connected()
         return true; 
     }
     return false;
+}
+
+function getCompanyId($storeid) {
+    global $link2;
+
+    $companyid;
+    $query = "Select companyid from store where storeid=\"$storeid\"";
+
+    $result = $link2->query($query) or die("Error in the consult2.." . mysqli_error($link2));
+    while ($row = mysqli_fetch_assoc($result)) {
+        $companyid = $row['companyid'];
+    }
+    return $companyid;
 }	

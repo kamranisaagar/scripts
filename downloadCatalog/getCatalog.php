@@ -1,6 +1,8 @@
 <?php
 require_once('c:/mpulse/scripts/functions.php');
 
+$comapnyid=getCompanyId($storeid);
+
 $link3 = mysqli_connect("162.243.35.72","mpulse","saagar12","product_catalog") or die("Error Making Connection" . mysqli_error($link2)); // MerchantPulse Link
 
 //Get Promotions
@@ -46,7 +48,7 @@ $val = array();
 $fields=array();
 
 // Inserting Categories
-$query = "select concat('ON-',categoryid) as categoryid,name,'ON-9' from categories";
+$query = "select concat('ON-',categoryid) as categoryid,categoryname,'ON-9' from categories where companyid={$comapnyid}";
 			  
 $result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
 
@@ -55,7 +57,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 	$fields=array();
 
 	foreach($row as $key => $value) {
-		if ($key == "name"){
+		if ($key == "categoryname"){
 			$fields[]="\"-".$value."\"";
 		}
 		else{
@@ -75,7 +77,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 
 
 // Enabling all active categories
-$query = "select concat('ON-',categoryid) as categoryid from categories where isactive=1";
+$query = "select concat('ON-',categoryid) as categoryid from categories where isvisible=1";
 			  
 $result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
 
@@ -103,7 +105,8 @@ $fields=array();
 
 
 // Get Products
-$query = "SELECT CONCAT('ON-',barcode) as id, barcode as ref, barcode, CONCAT(product_name,'-') as product_name, cost, price/1.1 AS pricesell, CONCAT('ON-',categoryid) as categoryid, taxid as taxid, isVariable,CONCAT(product_name,'-') as display  FROM product;";
+$query = "SELECT productid as id, productid as ref, barcode, productname as productname, cost, price/1.1 AS pricesell, categoryid as categoryid, taxid as taxid, isvariable,productname as display  FROM product p
+join category c on c.categoryid=p.categoryid and c.companyid={$companyid};";
 			  
 $result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
 
@@ -112,7 +115,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 	$fields=array();
 
 	foreach($row as $key => $value) {
-		if ($key == "isVariable"){
+		if ($key == "isvariable"){
 			$fields[]=$value;
 		}
 		else{
@@ -147,7 +150,7 @@ $fields=array();
 
 // Showing Products in Catalog
 
-$query = "SELECT CONCAT('ON-',barcode) as id from product where isVisible = 1;";
+$query = "SELECT productid as id from product where isvisible = 1;";
 			  
 $result = $link3->query($query) or die("Error in the consult.." . mysqli_error($link3));
 
