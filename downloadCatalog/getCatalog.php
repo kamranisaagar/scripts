@@ -70,7 +70,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 
 
 // Enabling all active categories
-$query = "select concat('ON-',categoryid) as categoryid from categories where isvisible=1";
+$query = "select categoryid as categoryid from category where isvisible=1";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
