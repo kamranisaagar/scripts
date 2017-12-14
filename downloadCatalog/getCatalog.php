@@ -133,13 +133,14 @@ $query = "INSERT INTO products(ID, REFERENCE, CODE, NAME, PRICEBUY, PRICESELL, C
 values {$values}
 
 ON DUPLICATE KEY UPDATE
-	PRICEBUY = VALUES(PRICEBUY),
+PRICEBUY = VALUES(PRICEBUY),
 PRICESELL=VALUES(PRICESELL),
 CATEGORY=VALUES(CATEGORY),
 NAME=VALUES(NAME),
 TAXCAT=VALUES(TAXCAT),
 isvprice=VALUES(isvprice),
-display=VALUES(display);";
+display=VALUES(display)
+reference=VALUES(reference);";
 
 $result = $link->query($query) or die("Error in the consult1.." . mysqli_error($link));
 
