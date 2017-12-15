@@ -99,8 +99,10 @@ $fields=array();
 
 
 // Get Products
-$query = "SELECT productid as id, productid as ref, barcode, productname as productname, cost, saleprice/1.1 AS pricesell, p.categoryid as categoryid, taxid as taxid, isvariable,productname as display  FROM product p
-join category c on c.categoryid=p.categoryid and c.companyid={$companyid};";
+$query = "SELECT p.productid AS id, p.productid AS ref, barcode, productname AS productname, cost, IFNULL(sp.saleprice,p.saleprice)/1.1 AS pricesell, p.categoryid AS categoryid, taxid AS taxid, isvariable,productname AS display  
+FROM product p
+JOIN category c ON c.categoryid=p.categoryid AND c.companyid={$companyid}
+LEFT JOIN storeproduct sp ON sp.productid=p.productid AND sp.storeid={$storeid}";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
