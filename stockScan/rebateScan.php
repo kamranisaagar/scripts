@@ -61,7 +61,7 @@ JOIN products p ON p.id=tl.product
 WHERE date(datenew) >='$startdate' AND date(datenew) <='$currentDate' AND (p.code='$barcode' 
 OR 
 p.code = (SELECT p.code AS child FROM products p
-JOIN products pp ON p.reference=pp.sub_product AND pp.category='001' AND pp.code='$barcode'))";
+JOIN products pp ON p.reference=pp.sub_product AND pp.categoryid='001' AND pp.code='$barcode'))";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
@@ -114,7 +114,7 @@ return $subcatProfile;
 function getParents(){
 	global $link2;
 
-$query="SELECT * FROM product WHERE category in ('001','006') AND parent IS NOT NULL AND subcat IS NOT NULL;";
+$query="SELECT * FROM product WHERE categoryid in ('001','006') AND parent IS NOT NULL AND subcat IS NOT NULL;";
 
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
