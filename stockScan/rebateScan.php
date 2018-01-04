@@ -117,7 +117,7 @@ return $subcatProfile;
 function getParents(){
 	global $link2;
 
-$query="SELECT * FROM product WHERE category in ('001','006') AND parentid IS NOT NULL AND subcat IS NOT NULL;";
+$query="SELECT * FROM product WHERE categoryid in ('001','006') AND parentid IS NOT NULL AND subcat IS NOT NULL;";
 
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
