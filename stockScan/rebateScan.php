@@ -4,6 +4,9 @@ require_once('c:/mpulse/scripts/functions.php');
 require_once('c:/mpulse/scripts/stockScan/writeTrans.php');
 require_once('c:/mpulse/scripts/stockScan/mailerClass.php');
 
+
+$currentDate="2017-12-31";
+
 $query = "SELECT articlecategory, startdate, enddate FROM promo_header WHERE DATE(enddate)='$currentDate' AND TYPE=1 AND remote='ACKNOWLEDGED'
 
 UNION
@@ -114,7 +117,7 @@ return $subcatProfile;
 function getParents(){
 	global $link2;
 
-$query="SELECT * FROM product WHERE category in ('001','006') AND parent IS NOT NULL AND subcat IS NOT NULL;";
+$query="SELECT * FROM product WHERE category in ('001','006') AND parentid IS NOT NULL AND subcat IS NOT NULL;";
 
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
