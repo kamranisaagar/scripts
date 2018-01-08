@@ -32,7 +32,7 @@ function writeReceipt($receiptid,$money){
 	global $link;
 	$xml="<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"no\\\"?><!DOCTYPE properties SYSTEM \\\"http://java.sun.com/dtd/properties.dtd\\\"><properties><comment>TSG POS</comment></properties>";
 //	echo $xml;
-    $query_writeReceipt = "INSERT INTO receipts VALUES (\"$receiptid\",\"$money\",\"2017-12-31\",\"$xml\",NULL)";
+    $query_writeReceipt = "INSERT INTO receipts VALUES (\"$receiptid\",\"$money\",NOW(),\"$xml\",NULL)";
    $result_writeReceipt = $link->query($query_writeReceipt) or die("Error in the consult.." . mysqli_error($link));
     echo "Written in Receipts<br><br>";
 }

@@ -10,6 +10,4 @@ rem "C:\mpulse\assets\php_compiler\php5.4.16\php.exe" setConfig.php
 
 rem "C:\mpulse\assets\php_compiler\php5.4.16\php.exe" setPercentages.php
 
-"C:\mpulse\assets\php_compiler\php5.4.16\php.exe" tempTSGData.php
-
 exit

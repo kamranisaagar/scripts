@@ -5,8 +5,6 @@ require_once('c:/mpulse/scripts/stockScan/writeTrans.php');
 require_once('c:/mpulse/scripts/stockScan/mailerClass.php');
 
 
-$currentDate="2017-12-31";
-
 $query = "SELECT articlecategory, startdate, enddate FROM promo_header WHERE DATE(enddate)='$currentDate' AND TYPE=1 AND remote='ACKNOWLEDGED'
 
 UNION
