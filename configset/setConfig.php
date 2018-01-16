@@ -7,7 +7,7 @@ $query = "UPDATE people SET visible=FALSE WHERE id NOT IN ('0','1','2','3');";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "UPDATE people SET apppassword='sha1:38828E996B767B36BB04B64B1F08272547A522B1' WHERE id='0';";
+$query = "UPDATE people SET apppassword='sha1:8974B8371B6EF83D5E4699EA78BE68BE596453FE' WHERE id='0';";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
