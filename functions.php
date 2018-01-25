@@ -25,12 +25,12 @@ $currentDate=getmyDate();
 
 function myErrorHandler($errno, $errstr, $errfile, $errline) {
 
-    emailTrigger("kamranisaagar@gmail.com","Error Recorded","Error: [$errno] $errstr - Error on line $errline in $errfile";
+    emailTrigger("kamranisaagarmob@gmail.com","Error Recorded","Error: [$errno] $errstr - Error on line $errline in $errfile");
 }
 
 function exception_handler($exception) {
 
-  emailTrigger("kamranisaagar@gmail.com","Exception Recorded",$exception->getMessage());
+  emailTrigger("kamranisaagarmob@gmail.com","Exception Recorded",$exception->getMessage());
 
 }
 
@@ -432,10 +432,8 @@ function getCompanyId($storeid) {
     $mail->Port = "465";
  
     $mail->setFrom('mpulseremote@gmail.com', 'MerchantPulse');
-    foreach ($toArray as $receiver){
-		$mail->AddAddress($receiver, 'Mpulse Subscriber');	
-	}
- 
+   	$mail->AddAddress($to, 'Saagar Kamrani');	
+	
     $mail->Subject  =  "{$storename} - {$subject}";
     $mail->IsHTML(true);
     $mail->Body    = $content;
