@@ -7,6 +7,7 @@ exit("Unable to connect to internet");
 }
 
 require_once('c:/mpulse/assets/db.php');
+require_once('c:/mpulse/scripts/PHPMailerClass/PHPMailerAutoload.php');
 
 $storeinfo = parse_ini_file("c:/mpulse/storeinfo.ini");
 
@@ -21,6 +22,22 @@ $timestamp=getmyTimeStamp();
 $products = getAllProducts();
 
 $currentDate=getmyDate();
+
+function myErrorHandler($errno, $errstr, $errfile, $errline) {
+
+    emailTrigger("kamranisaagar@gmail.com","Error Recorded","Error: [$errno] $errstr - Error on line $errline in $errfile";
+}
+
+function exception_handler($exception) {
+
+  emailTrigger("kamranisaagar@gmail.com","Exception Recorded",$exception->getMessage());
+
+}
+
+set_error_handler('myErrorHandler',E_ALL|E_STRICT);
+set_exception_handler('exception_handler');
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	
 function getmyDate() {
     date_default_timezone_set("Australia/Canberra");
@@ -397,4 +414,38 @@ function getCompanyId($storeid) {
         $companyid = $row['companyid'];
     }
     return $companyid;
-}	
+}
+
+ function emailTrigger($to, $subject,$content) {
+	 global $timestamp;
+	 global $storeid;
+	 global $storename;
+
+    $mail = new PHPMailer();
+    $mail->CharSet =  "utf-8";
+    $mail->IsSMTP();
+    $mail->SMTPAuth = true;
+    $mail->Username = "mpulseremote@gmail.com";
+    $mail->Password = "saagar12";
+    $mail->SMTPSecure = "ssl";  
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = "465";
+ 
+    $mail->setFrom('mpulseremote@gmail.com', 'MerchantPulse');
+    foreach ($toArray as $receiver){
+		$mail->AddAddress($receiver, 'Mpulse Subscriber');	
+	}
+ 
+    $mail->Subject  =  "{$storename} - {$subject}";
+    $mail->IsHTML(true);
+    $mail->Body    = $content;
+  
+     if($mail->Send())
+     {
+        echo "Message was Successfully Send :)";
+     }
+     else
+     {
+        echo "Mail Error - >".$mail->ErrorInfo;
+     }
+ }	
