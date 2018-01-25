@@ -99,7 +99,7 @@ $fields=array();
 
 
 // Get Products
-$query = "SELECT p.productid AS id, p.productid AS ref, barcode, productname AS productname, cost, IFNULL(sp.saleprice,p.saleprice)/1.1 AS pricesell, p.categoryid AS categoryid, taxid AS taxid, isvariable,productname AS display  
+$query = "SELECT p.productid AS id, p.productid AS ref, barcode, productname AS productname, cost, IFNULL(sp.saleprice,p.saleprice)/1.1 AS pricesell, p.categoryid AS categoryid, taxid AS taxid, isvariable,productname AS display, null as sub_category  
 FROM product p
 JOIN category c ON c.categoryid=p.categoryid AND c.companyid={$companyid}
 LEFT JOIN storeproduct sp ON sp.productid=p.productid AND sp.storeid={$storeid}";
@@ -125,7 +125,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $values = implode(",", $val);
 
-$query = "INSERT INTO products(ID, REFERENCE, CODE, NAME, PRICEBUY, PRICESELL, CATEGORY, TAXCAT, isvprice, display) 
+$query = "INSERT INTO products(ID, REFERENCE, CODE, NAME, PRICEBUY, PRICESELL, CATEGORY, TAXCAT, isvprice, display, sub_category) 
 values {$values}
 
 ON DUPLICATE KEY UPDATE
@@ -136,7 +136,8 @@ NAME=VALUES(NAME),
 TAXCAT=VALUES(TAXCAT),
 isvprice=VALUES(isvprice),
 display=VALUES(display),
-REFERENCE=VALUES(REFERENCE);";
+REFERENCE=VALUES(REFERENCE),
+sub_category=null;";
 
 $result = $link->query($query) or die("Error in the consult1.." . mysqli_error($link));
 
