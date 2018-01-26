@@ -39,6 +39,7 @@ function ShutDown(){
     if(in_array($lasterror['type'],Array( E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR, E_CORE_WARNING, E_COMPILE_WARNING, E_PARSE))){
         myErrorHandler($lasterror['type'],$lasterror['message'],$lasterror['file'],$lasterror['line']);
     }
+}
 
 set_error_handler('myErrorHandler',E_ALL|E_STRICT);
 set_exception_handler('exception_handler');
