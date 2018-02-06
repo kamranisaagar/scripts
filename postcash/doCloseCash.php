@@ -133,18 +133,21 @@ function getSequenceNumber(){
 	$resultSet = array();
 
 	while ($row = mysqli_fetch_assoc($result)) {
-	$resultSet[$row['PRODUCTNAME']]= $row['UNITS'];
+		$resultSet[] = $row;
 	}
-	
 	  return $resultSet;
   }
 
   function uploadVoidLines($resultSet,$tempid){
 	global $link2;
 
-	foreach ($resultSet as $productname => $qty)
+	foreach ($resultSet as $arrayval)
 	{
-		$query="insert into voidlines(productname, units, tempid) values ('$productname','$qty','$tempid')";
+		$productname=$arrayval['PRODUCTNAME'];
+		$qty=$arrayval['UNITS'];
+		$datetime=$arrayval['REMOVEDDATE'];
+		
+		$query="insert into voidlines(datetime, productname, units, tempid) values ('$datetime','$productname','$qty','$tempid')";
 		$result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 	}
 
