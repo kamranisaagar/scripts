@@ -16,11 +16,13 @@ insertRecord();
 updateProperties();
 
 // Post Close Shift
-postCash($storeid);	
+$tempid=postCash($storeid);
+$resultSet= getVoidLines($currentSequence);
+uploadVoidLines($resultSet,$tempid);
 }
 
 else {
-	echo "No Transactions in Current Sequence.";
+	echo "No Transactions in Current Sequence";
 }
 
 	
@@ -112,5 +114,40 @@ function getSequenceNumber(){
 	  }
 
 	  return $count;
+  }
+
+  function getVoidLines($sequence){
+	global $link;
+
+	$query="select * from closedcash where hostsequence='$sequence' and host='TSG'";
+	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+	while ($row = mysqli_fetch_assoc($result)) {
+	$start= $row['DATESTART'];
+	$end= $row['DATEEND'];
+	}
+	
+	$query="select * from lineremoved where removeddate >= '$start' and removeddate <= '$end'";
+	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+	$resultSet = array();
+
+	while ($row = mysqli_fetch_assoc($result)) {
+	$resultSet[$row['PRODUCTNAME']]= $row['UNITS'];
+	}
+	
+	  return $resultSet;
+  }
+
+  function uploadVoidLines($resultSet,$tempid){
+	global $link2;
+
+	foreach ($resultSet as $productname => $qty)
+	{
+		$query="insert into voidlines(productname, units, tempid) values ('$productname','$qty','$tempid')";
+		$result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
+	}
+
+
   }
   

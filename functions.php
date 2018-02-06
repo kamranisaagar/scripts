@@ -317,7 +317,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 	  	$query = "insert ignore into tempclosecash (amount, customercount,storeid,date,wsamount,osamount,ssamount) values ('$total','$customerCount','$storeid','$date','$wsamount','$osamount','$ssamount')";
 		$result2 = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 		
-echo "Please wait...";
+		return mysqli_insert_id($link2);
   }
   
 function getAllProducts(){
