@@ -5,7 +5,7 @@ require_once('c:/mpulse/scripts/functions.php');
     global $link;
 	global $link2;
 
-    $query = "select * from store where storeid='{$storeid}'";
+    $query = "select * from store where storeid='{$storeid}' where ctnperc is not null";
 			  
     $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
    
@@ -15,7 +15,9 @@ require_once('c:/mpulse/scripts/functions.php');
 		$pktperc=$row['pktperc'];
 		$tobacperc = $row['tobacperc'];
 	}
-	
+
+	if (isset($ctnperc)) {
+
 	$query = "update categories set defaultmargin={$ctnperc} where id='001'";  
 	$result2 = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 	
@@ -31,5 +33,7 @@ require_once('c:/mpulse/scripts/functions.php');
 	WHERE p.category IN ('001','002','006')";
 	
 	$result3 = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+	}
 
 ?>
