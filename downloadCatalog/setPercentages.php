@@ -5,7 +5,7 @@ require_once('c:/mpulse/scripts/functions.php');
     global $link;
 	global $link2;
 
-    $query = "select * from store where storeid='{$storeid}' where ctnperc is not null";
+    $query = "select * from store where storeid='{$storeid}' and ctnperc is not null";
 			  
     $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
    
