@@ -90,11 +90,11 @@ $query = "update categories set parentid='DefaultCategory', catshowname=true whe
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid=null, catshowname=true where id='DefaultCategory';";
+$query = "update categories set parentid=id, catshowname=false where id not in ({$activeCats});";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid=id, catshowname=false where id not in ({$activeCats});";
+$query = "update categories set parentid=null, catshowname=true where id='DefaultCategory';";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
