@@ -45,8 +45,13 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 $val = array();
 $fields=array();
 
+//Setting DefaultCategory
+$query = "insert ignore into categories(id,name,parentid) values ('DefaultCategory','View Catalog',null);";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
 // Inserting Categories
-$query = "select categoryid as categoryid,categoryname,'ON-9' from category where companyid={$companyid}";
+$query = "select categoryid as categoryid,categoryname,'DefaultCategory' from category where companyid={$companyid}";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
@@ -81,11 +86,11 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $activeCats=implode(",",$activeCategories);
 
-$query = "update categories set parentid='ON-9', catshowname=true where id in ({$activeCats})";
+$query = "update categories set parentid='DefaultCategory', catshowname=true where id in ({$activeCats})";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "update categories set parentid=null, catshowname=true where id='ON-9';";
+$query = "update categories set parentid=null, catshowname=true where id='DefaultCategory';";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
