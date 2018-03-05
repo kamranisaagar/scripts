@@ -178,5 +178,10 @@ SET FOREIGN_KEY_CHECKS = 1;";
 
 $result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_error($link));
 
+$query = "UPDATE products_cat 
+JOIN products ON products.reference=products_cat.product
+SET products_cat.product=products.id";
+
+$result = $link->query($query) or die("Error in the consult2.." . mysqli_error($link));
 
 ?>
