@@ -174,14 +174,11 @@ $result = $link->query($query) or die("Error in the consult2.." . mysqli_error($
 $query = "SET FOREIGN_KEY_CHECKS = 0;
 SELECT @@FOREIGN_KEY_CHECKS;
 Insert ignore into products_cat(product) values {$values};
-SET FOREIGN_KEY_CHECKS = 1;";
+SET FOREIGN_KEY_CHECKS = 1;
 
-$result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_error($link));
-
-$query = "UPDATE products_cat 
+UPDATE products_cat 
 JOIN products ON products.reference=products_cat.product
 SET products_cat.product=products.id";
 
-$result = $link->query($query) or die("Error in the consult2.." . mysqli_error($link));
-
+$result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_error($link));
 ?>
