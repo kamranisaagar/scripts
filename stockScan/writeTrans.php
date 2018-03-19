@@ -79,8 +79,9 @@ function writeTaxLines($taxlineid,$untaxed_am,$total_tax,$receiptid)
 function writeTicketsNum($ticketid)
 {
 	global $link;
+	$ticketid = $ticketid+1;
 
-    $query_writeTicketsNum = "Update ticketsnum set ID=\"$ticketid\"";
+    $query_writeTicketsNum = "Update pickup_number set ID=\"$ticketid\"";
     $result_writeTicketsNum = $link->query($query_writeTicketsNum) or die("Error in the consult.." . mysqli_error($link));
     echo "Written in TicketsNum<br><br>";
 }
@@ -100,7 +101,7 @@ function getMoneyId() {
 function getTicketId() {
 	global $link;
 
-    $query_ticketid = "SELECT ID+1 AS ticketid FROM ticketsnum";
+    $query_ticketid = "SELECT ID AS ticketid FROM pickup_number";
     $result_ticketid = $link->query($query_ticketid) or die("Error in the consult.." . mysqli_error($link));
    
     while ($row_ticketid = mysqli_fetch_assoc($result_ticketid)) {
