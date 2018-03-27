@@ -62,7 +62,7 @@ function writeTicketLines($receiptid,$products){
 function writePayment($paymentid,$receiptid,$paymentamount){
 	global $link;
 
-    $query_writePayment = "INSERT INTO payments (id, receipt, payment, total, paid, changegiven, transid, returnmsg, notes) VALUES (\"$paymentid\",\"$receiptid\",\"free\",\"$paymentamount\",\"$paymentamount\",\"$paymentamount\",NULL,\"OK\",NULL)";
+    $query_writePayment = "INSERT INTO payments (id, receipt, payment, total, paid, changegiven, transid, returnmsg, notes, createddate) VALUES (\"$paymentid\",\"$receiptid\",\"free\",\"$paymentamount\",\"$paymentamount\",\"$paymentamount\",NULL,\"OK\",NULL,now())";
     $result_writePayment = $link->query($query_writePayment) or die("Error in the consult.." . mysqli_error($link));
     echo "Written in Payments<br><br>";
 }
