@@ -111,21 +111,14 @@ function getTicketId() {
 }
 
 function getProducts($items) {
-    global $link2;
 
-    $query = "SELECT * FROM freechoicepos.products";
-    $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
-    $prices = array();
-
-    while ($row = mysqli_fetch_assoc($result)) {
-		$prices[$row['barcode']]=$row['pricesell'];		
-    }
+    $prices = getProductPrices();
 	
 	foreach ($items as $barcode => $qty){
 		$products[$barcode][0] = current(getProductID($barcode));
 		$products[$barcode][1] = str_ireplace("&","and",key(getProductID($barcode)));
 		$products[$barcode][2] = $qty;
-		$products[$barcode][3] = $prices[$barcode]/1.1;
+		$products[$barcode][3] = round($prices[$barcode],2);
 	}
 	
     return $products;
@@ -138,7 +131,8 @@ function getProductID($sku) {
     $result_productid = $link->query($query_productid) or die("Error in the consult.." . mysqli_error($link));
 	if(mysqli_num_rows($result_productid) == 0)
 	{
-	 $productid['Unknown Product']="ON-MISC123";	
+	 $concatName='Unknown Product -'.$sku;
+	 $productid[$concatName]="ON-MISC123";	
 	}
     else 
 	{
@@ -148,6 +142,71 @@ function getProductID($sku) {
 		 }
     }
     return $productid;
+}
+
+function getProductPrices() {
+	 global $link;
+
+	// Initializing
+	$allPromotions = array();
+
+	//Getting All Promotions Subcats
+	$query = "select sub_category from products where category in ('001','002','003','004','006') and sub_category is not null group by sub_category;";
+				  
+	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+	while ($row = mysqli_fetch_assoc($result)) {	
+		$allPromotions[$row['sub_category']]['ctn']= 0;
+		$allPromotions[$row['sub_category']]['pkt']= 0;
+	}
+
+	//Get Promotions
+	$query = "SELECT articlecategory, ifnull(SUM(amount),0) as amount, ifnull(SUM(ctnamount),0) as ctnamount FROM promo_header
+	WHERE date(startdate)<=curdate() AND date(enddate)>=curdate() AND markedexpired=0 AND (remote = 'ACKNOWLEDGED' OR remote IS NULL)
+	GROUP BY articlecategory;";
+				  
+	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+	while ($row = mysqli_fetch_assoc($result)) {	
+		$allPromotions[$row['articlecategory']]['ctn']= $row['ctnamount'];
+		$allPromotions[$row['articlecategory']]['pkt']= $row['amount'];
+	}
+
+
+	$query = "SELECT * from products;";
+	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
+
+	while ($row = mysqli_fetch_assoc($result)) {	
+		if (isset($allPromotions[$row['sub_category']]['ctn'])){
+			$promovalue['ctn']=$allPromotions[$row['sub_category']]['ctn'];
+			$promovalue['pkt']=$allPromotions[$row['sub_category']]['pkt'];
+		}
+		
+		else {
+			$promovalue['ctn']=0;
+			$promovalue['pkt']=0;
+		}
+		
+		// Setting category price
+		if ($row['category']=='001') {
+			$prices[$row['code']]=($row['pricesell']/1.1)-$promovalue['ctn'];
+		}
+		
+		else if ($row['category']=='002') {
+			$prices[$row['code']]=($row['pricesell']/1.1)-$promovalue['pkt'];
+			}
+		
+		else if ($row['category']=='006') {
+			$prices[$row['code']]=($row['pricesell']/1.1)-$promovalue['pkt'];
+		}
+		
+		else {
+			$prices[$row['code']]=$row['pricesell']/1.1;
+		}
+
+	}
+
+	return $prices;
 }
 
 ?>
