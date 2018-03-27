@@ -189,19 +189,19 @@ function getProductPrices() {
 		
 		// Setting category price
 		if ($row['category']=='001') {
-			$prices[$row['code']]=($row['pricesell']/1.1)-$promovalue['ctn'];
+			$prices[$row['code']]=($row['pricesell']*1.1)-$promovalue['ctn'];
 		}
 		
 		else if ($row['category']=='002') {
-			$prices[$row['code']]=($row['pricesell']/1.1)-$promovalue['pkt'];
+			$prices[$row['code']]=($row['pricesell']*1.1)-$promovalue['pkt'];
 			}
 		
 		else if ($row['category']=='006') {
-			$prices[$row['code']]=($row['pricesell']/1.1)-$promovalue['pkt'];
+			$prices[$row['code']]=($row['pricesell']*1.1)-$promovalue['pkt'];
 		}
 		
 		else {
-			$prices[$row['code']]=$row['pricesell']/1.1;
+			$prices[$row['code']]=$row['pricesell']*1.1;
 		}
 
 	}
