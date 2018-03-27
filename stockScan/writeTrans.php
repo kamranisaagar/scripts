@@ -118,7 +118,7 @@ function getProducts($items) {
 		$products[$barcode][0] = current(getProductID($barcode));
 		$products[$barcode][1] = str_ireplace("&","and",key(getProductID($barcode)));
 		$products[$barcode][2] = $qty;
-		$products[$barcode][3] = round($prices[$barcode],2);
+		$products[$barcode][3] = round($prices[$barcode]/1.1,2);
 	}
 	
     return $products;
