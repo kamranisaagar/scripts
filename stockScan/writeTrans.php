@@ -173,7 +173,7 @@ function getProductPrices() {
 	}
 
 
-	$query = "SELECT * from products;";
+	$query = "SELECT code, category, sub_category, pricesell from products;";
 	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
 	while ($row = mysqli_fetch_assoc($result)) {	
