@@ -156,7 +156,7 @@ function getPaymentType($pString){
 		return "2";
 	}
 
-	else if($pString == "voucher")
+	else if($pString == "voucher" or $pString == "debt")
 	{
 		return "4";
 	}
