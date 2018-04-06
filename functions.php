@@ -279,7 +279,7 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 
 //Getting OtherStore Amount
 $query="SELECT SUM(total) AS osamount FROM payments p
-JOIN receipts r ON p.receipt = r.ID AND p.payment in ('voucher')
+JOIN receipts r ON p.receipt = r.ID AND p.payment in ('voucher', 'debt')
 
 WHERE datenew >= (SELECT MAX(datestart) FROM closedcash
 WHERE dateend IS NOT NULL
