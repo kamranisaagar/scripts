@@ -226,10 +226,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 		$date = $row['date'];
 		}
 
-// Getting Cashout Amount
+// Getting Cashout and Lotto Amount
 $query="SELECT SUM(price) AS cashout FROM ticketlines tl
 JOIN receipts r ON r.id=tl.ticket
-WHERE r.money= '$money' AND tl.product='ON-cashoutbtn'";
+WHERE r.money= '$money' AND tl.product in ('ON-cashoutbtn','on-lotto-win')";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
 
