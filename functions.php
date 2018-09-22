@@ -225,6 +225,9 @@ while ($row = mysqli_fetch_assoc($result)) {
 		$customerCount = $row['cc'];
 		$date = $row['date'];
 		}
+		
+$cashout=0;
+$lotto=0;		
 
 // Getting Cashout
 $query="SELECT SUM(price) AS cashout FROM ticketlines tl
