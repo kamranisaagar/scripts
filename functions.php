@@ -226,10 +226,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 		$date = $row['date'];
 		}
 
-// Getting Cashout and Lotto Amount
+// Getting Cashout
 $query="SELECT SUM(price) AS cashout FROM ticketlines tl
 JOIN receipts r ON r.id=tl.ticket
-WHERE r.money= '$money' AND tl.product in ('ON-cashoutbtn','on-lotto-win')";
+WHERE r.money= '$money' AND tl.product in ('ON-cashoutbtn')";
 
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
 
@@ -238,8 +238,21 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		$cashout= $row['cashout'];
 		}
 
+// Getting Lotto Amount
+$query="SELECT SUM(price) AS lotto FROM ticketlines tl
+JOIN receipts r ON r.id=tl.ticket
+WHERE r.money= '$money' AND tl.product in ('on-lotto-win')";
+
+$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));		
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		
+		$lotto= $row['lotto'];
+		}		
+
 //Adjusting Total Sale
-$total=$total-$cashout;					
+$total=$total-$cashout;
+$total=$total+$lotto;					
 
 //Getting EFT
 $query="SELECT SUM(total) AS eft FROM payments p
