@@ -11,7 +11,7 @@ $query = "UPDATE people SET apppassword='sha1:8974B8371B6EF83D5E4699EA78BE68BE59
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
-$query = "UPDATE people SET apppassword='sha1:04E8696E6424C21D717E46008780505D598EB59A' WHERE id='1';";
+$query = "UPDATE people SET apppassword='sha1:CB58C376C77FA09772E5859694EB0176C2E0E3BA' WHERE id='1';";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 
