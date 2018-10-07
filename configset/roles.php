@@ -4,31 +4,7 @@ $managerRole="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<!-- \r\n    uniCent
 
 //$empRole="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!-- \n    uniCenta oPOS - Touch friendly Point Of Sale\n    Copyright (c) 2009-2012 uniCenta.\n    http://sourceforge.net/projects/unicentaopos\n\n    This file is part of uniCenta oPOS.\n\n    uniCenta oPOS is free software: you can redistribute it and/or modify\n    it under the terms of the GNU General Public License as published by\n    the Free Software Foundation, either version 3 of the License, or\n    (at your option) any later version.\n\n    uniCenta oPOS is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License\n    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.\n -->\n<permissions>\n    <class name=\"com.openbravo.pos.sales.JPanelTicketSales\"/>\n   <class name=\"com.openbravo.pos.panels.JPanelPayments\"/>\n    <class name=\"com.openbravo.pos.promotion.JPanelPromo\"/>\n<class name=\"sales.EditLines\"/>\n  <class name=\"sales.RefundTicket\"/>\n    <class name=\"sales.PrintTicket\"/>\n    <class name=\"sales.Total\"/>\n   <class name=\"payment.cash\"/>\n  <class name=\"payment.magcard\"/> \n    <class name=\"payment.paper\"/> \n    <class name=\"refund.cash\"/>\n    <class name=\"refund.cheque\"/>\n    <class name=\"refund.paper\"/>\n    <class name=\"refund.magcard\"/>\n   \n<!-- EPM -->\n <!-- <class name=\"com.openbravo.pos.epm.JPanelEmployeePresence\" /> -->   \n\n  <!-- Section for Additional button scripts -->    \n<!--    <class name=\"button.refundit\"/> -->\n<!--<class name=\"button.sendorder\"/>-->\n    <class name=\"button.print\"/>\n    <class name=\"button.opendrawer\"/> \n    <class name=\"button.linediscount\"/> \n <class name=\"button.scharge\"/>\n\n</permissions>";
 
-$empRole = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<permissions>
-    <class name=\"com.openbravo.pos.sales.JPanelTicketSales\"/>
-    <class name=\"com.openbravo.pos.sales.JPanelTicketEdits\"/>
-    <class name=\"com.openbravo.pos.panels.JPanelPayments\"/>
-    <class name=\"com.openbravo.pos.promotion.JPanelPromo\"/>
-    <class name=\"sales.EditLines\"/>
-    <class name=\"sales.RefundTicket\"/>
-    <class name=\"sales.PrintTicket\"/>
-    <class name=\"button.sendorder\"/>
-    <class name=\"sales.Total\"/>
-    <class name=\"payment.cash\"/>
-    <class name=\"payment.cheque\"/>
-    <class name=\"payment.paper\"/>
-    <class name=\"payment.magcard\"/>
-    <class name=\"payment.laybyrefund\"/>
-    <class name=\"payment.free\"/>
-    <class name=\"refund.cash\"/>
-    <class name=\"refund.cheque\"/>
-    <class name=\"refund.paper\"/>
-    <class name=\"refund.magcard\"/>
-    <class name=\"Menu.ChangePassword\"/>
-  <class name=\"com.openbravo.pos.epm.JPanelEmployeePresence\" />
-    <class name=\"button.print\"/>
-    <class name=\"button.opendrawer\"/>
-    <class name=\"button.linediscount\"/>
-</permissions>";
+$empRole = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><permissions><class name=\"com.openbravo.pos.sales.JPanelTicketSales\"/><class name=\"com.openbravo.pos.sales.JPanelTicketEdits\"/><class name=\"com.openbravo.pos.panels.JPanelPayments\"/><class name=\"com.openbravo.pos.promotion.JPanelPromo\"/><class name=\"sales.EditLines\"/><class name=\"sales.RefundTicket\"/><class name=\"sales.PrintTicket\"/><class name=\"button.sendorder\"/><class name=\"sales.Total\"/><class name=\"payment.cash\"/><class name=\"payment.cheque\"/><class name=\"payment.paper\"/><class name=\"payment.magcard\"/><class name=\"payment.laybyrefund\"/><class name=\"payment.free\"/><class name=\"refund.cash\"/><class name=\"refund.cheque\"/><class name=\"refund.paper\"/><class name=\"refund.magcard\"/><class name=\"Menu.ChangePassword\"/><class name=\"com.openbravo.pos.epm.JPanelEmployeePresence\" /><class name=\"button.print\"/><class name=\"button.opendrawer\"/><class name=\"button.linediscount\"/></permissions>";
+
+
 ?>
