@@ -162,7 +162,7 @@ function getProductPrices() {
 
 	//Get Promotions
 	$query = "SELECT articlecategory, ifnull(SUM(amount),0) as amount, ifnull(SUM(ctnamount),0) as ctnamount FROM promo_header
-	WHERE date(startdate)<=curdate() AND date(enddate)>=curdate() AND markedexpired=0 AND (remote = 'ACKNOWLEDGED' OR remote IS NULL)
+	WHERE date(startdate)<='2018-10-28' AND date(enddate)>='2018-10-28' AND markedexpired=0 AND (remote = 'ACKNOWLEDGED' OR remote IS NULL)
 	GROUP BY articlecategory;";
 				  
 	$result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
