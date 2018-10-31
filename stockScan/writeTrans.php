@@ -1,5 +1,7 @@
 <?php
 
+/*
+
 function pushToPOS($items) {
 	$unique = uniqid();
 	$receiptid="SS-".$unique;
@@ -208,5 +210,7 @@ function getProductPrices() {
 
 	return $prices;
 }
+
+*/
 
 ?>
