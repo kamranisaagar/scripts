@@ -1,5 +1,8 @@
 <?php
 
+
+/*
+
 require_once('c:/mpulse/scripts/functions.php');
 require_once('c:/mpulse/scripts/stockScan/writeTrans.php');
 require_once('c:/mpulse/scripts/stockScan/mailerClass.php');
@@ -126,5 +129,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 return $arrayvar;
 }
 
+
+*/
 
 ?>
