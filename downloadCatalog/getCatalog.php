@@ -111,18 +111,9 @@ $query = "SELECT p.productid AS id, p.productid AS ref, barcode, productname AS 
 FROM product p
 JOIN category c ON c.categoryid=p.categoryid AND (c.companyid={$companyid} or  c.categoryid='ON-19')
 LEFT JOIN storeproduct sp ON sp.productid=p.productid AND sp.storeid={$storeid}
-JOIN taxclass t ON t.taxid = p.taxid";
+JOIN taxclass t ON t.taxid = p.taxid
 
-
-
-/*
-$query = "SELECT p.productid AS id, p.productid AS ref, barcode, productname AS productname, cost, IFNULL(sp.saleprice,p.saleprice)/1.1 AS pricesell, p.categoryid AS categoryid, taxid AS taxid, isvariable,productname AS display, subcat AS sub_category  
-FROM product p
-
-LEFT JOIN storeproduct sp ON sp.productid=p.productid AND sp.storeid=1
-WHERE p.productid IN (4592, 4590, 4588)";
-
-*/
+where isactive=1";
 
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
