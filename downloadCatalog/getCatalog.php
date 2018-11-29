@@ -113,7 +113,7 @@ JOIN category c ON c.categoryid=p.categoryid AND (c.companyid={$companyid} or  c
 LEFT JOIN storeproduct sp ON sp.productid=p.productid AND sp.storeid={$storeid}
 JOIN taxclass t ON t.taxid = p.taxid
 
-where isactive=1";
+where p.isactive=1";
 
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
