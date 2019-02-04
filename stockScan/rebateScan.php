@@ -26,7 +26,7 @@ foreach ($subcats as $subcat => $startdate){
 	$subcatParents=array_keys($parents, $subcat);
 	foreach ($subcatParents as $key => $barcode){
 	$sales[$barcode]=getProductSaleSticks($barcode,$startdate)/$subcatProfile[$subcat];
-	$purchase[$barcode]=getProductPurchaseSticks($barcode,$startdate)/$subcatProfile[$subcat]
+	$purchase[$barcode]=getProductPurchaseSticks($barcode,$startdate)/$subcatProfile[$subcat];
 	$toScan[$barcode]=ceil($purchase[$barcode]-$sales[$barcode]);
 		if ($toScan[$barcode] <= 0){
 			unset($toScan[$barcode]);
