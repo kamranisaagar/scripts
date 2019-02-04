@@ -2,6 +2,10 @@
 require_once('c:/mpulse/scripts/functions.php');
 require_once('c:/mpulse/scripts/stockScan/writeTrans.php');
 require_once('c:/mpulse/scripts/stockScan/mailerClass.php');
+
+
+$currentDate="2019-02-03";
+
 $query = "SELECT articlecategory, startdate, enddate FROM promo_header WHERE DATE(enddate)='$currentDate' AND TYPE=1 AND remote='RECEIVED'
 UNION
 SELECT subcat, startdate,enddate FROM mpulse.recalled_promotions WHERE DATE(enddate) = '$currentDate';";
@@ -10,7 +14,10 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 $subcats=array();
 $subcatProfile=getSubcatSticks();
 $parents=array();
-$parents=getParents();
+$newArray=getParents();
+$parents=$newArray[0];
+$prods=$newArray[1];
+
 $toScan = array();
 while ($row = mysqli_fetch_assoc($result)) {
 	$subcats[$row['articlecategory']]=$row['startdate'];
@@ -19,8 +26,7 @@ foreach ($subcats as $subcat => $startdate){
 	$subcatParents=array_keys($parents, $subcat);
 	foreach ($subcatParents as $key => $barcode){
 	$sales[$barcode]=getProductSaleSticks($barcode,$startdate)/$subcatProfile[$subcat];
-	$purchase[$barcode]=getProductPurchaseSticks($barcode,$startdate)/$subcatProfile[$subcat];
-	
+	$purchase[$barcode]=getProductPurchaseSticks($barcode,$startdate)/$subcatProfile[$subcat]
 	$toScan[$barcode]=ceil($purchase[$barcode]-$sales[$barcode]);
 		if ($toScan[$barcode] <= 0){
 			unset($toScan[$barcode]);
@@ -56,14 +62,21 @@ function getProductPurchaseSticks($barcode,$startdate){
 	global $link2;
 	global $currentDate;
 	global $storeid;
+	global $prods;	
+	
+	
+	$prodid=$prods[$barcode];
+	
 $query="SELECT p.subcat,ROUND(SUM(dl.qty*p.sticks/pr.maxsticks)*pr.maxsticks,2) AS sticks 
 FROM storeops.deliveryline dl
 JOIN storeops.delivery d ON d.deliveryid=dl.deliveryid
 join storeops.invoice i on i.invoiceid=d.invoiceid
 JOIN storeops.product p ON p.productid=dl.productid
 JOIN storeops.productcat pr ON pr.subcat=p.subcat
-WHERE  d.storeid='$storeid' AND DATE(i.deliverydate) >= '$startdate' AND DATE(i.deliverydate) <= '$currentDate' AND p.barcode='$barcode'
-GROUP BY p.barcode;";
+WHERE  d.storeid='$storeid' AND DATE(i.deliverydate) >= '$startdate' AND DATE(i.deliverydate) <= '$currentDate' AND p.productid='$prodid'
+GROUP BY p.productid;";
+
+
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 $sticks=0;
 while ($row = mysqli_fetch_assoc($result)) {
@@ -86,7 +99,12 @@ $query="SELECT * FROM product WHERE categoryid in ('001','006') AND parentid IS 
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 while ($row = mysqli_fetch_assoc($result)) {
 	$arrayvar[$row['barcode']]=$row['subcat'];
+	$arrayvar1[$row['barcode']]=$row['productid'];
 }
-return $arrayvar;
+
+$newArray[0]=$arrayvar;
+$newArray[1]=$arrayvar1;
+
+return $newArray;
 }
 ?>
