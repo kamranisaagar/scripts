@@ -30,7 +30,7 @@ function writeReceipt($receiptid,$money){
 	global $link;
 	$xml="<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"no\\\"?><!DOCTYPE properties SYSTEM \\\"http://java.sun.com/dtd/properties.dtd\\\"><properties><comment>TSG POS</comment></properties>";
 //	echo $xml;
-    $query_writeReceipt = "INSERT INTO receipts VALUES (\"$receiptid\",\"$money\",'2019-02-03',\"$xml\",NULL)";
+    $query_writeReceipt = "INSERT INTO receipts VALUES (\"$receiptid\",\"$money\",NOW(),\"$xml\",NULL)";
    $result_writeReceipt = $link->query($query_writeReceipt) or die("Error in the consult.." . mysqli_error($link));
     echo "Written in Receipts<br><br>";
 }
@@ -55,7 +55,7 @@ function writeTicketLines($receiptid,$products){
 }
 function writePayment($paymentid,$receiptid,$paymentamount){
 	global $link;
-    $query_writePayment = "INSERT INTO payments (id, receipt, payment, total, paid, changegiven, transid, returnmsg, notes, createddate) VALUES (\"$paymentid\",\"$receiptid\",\"free\",\"$paymentamount\",\"$paymentamount\",\"$paymentamount\",NULL,\"OK\",NULL,'2019-02-03')";
+    $query_writePayment = "INSERT INTO payments (id, receipt, payment, total, paid, changegiven, transid, returnmsg, notes, createddate) VALUES (\"$paymentid\",\"$receiptid\",\"free\",\"$paymentamount\",\"$paymentamount\",\"$paymentamount\",NULL,\"OK\",NULL,NOW())";
     $result_writePayment = $link->query($query_writePayment) or die("Error in the consult.." . mysqli_error($link));
     echo "Written in Payments<br><br>";
 }
