@@ -274,6 +274,13 @@ $result = $link->query($query) or die("Error in the consult.." . mysqli_error($l
 		
 		$eftpos= $row['eft'];
 		}
+	
+$fh = fopen("C:/mpulse/eftpos_amount.txt", 'w') or die("Failed to create file"); 
+
+$text= date('d/m/Y H:i:s')."---------> $".$eftpos;
+
+fwrite($fh, $text) or die("Could not write to file"); 
+fclose($fh); 							
 
 //Getting WSAmount
 $query="SELECT SUM(total) AS wsamount FROM payments p
