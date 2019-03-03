@@ -73,7 +73,8 @@ JOIN storeops.delivery d ON d.deliveryid=dl.deliveryid
 join storeops.invoice i on i.invoiceid=d.invoiceid
 JOIN storeops.product p ON p.productid=dl.productid
 JOIN storeops.productcat pr ON pr.subcat=p.subcat
-WHERE  d.storeid='$storeid' AND DATE(i.deliverydate) >= '$startdate' AND DATE(i.deliverydate) <= '$currentDate' AND p.productid='$prodid'
+join storeops.store s on s.storeid=d.storeid
+WHERE  d.storeid='$storeid' AND s.companyid=3 and DATE(i.deliverydate) >= '$startdate' AND DATE(i.deliverydate) <= '$currentDate' AND p.productid='$prodid'
 GROUP BY p.productid;";
 
 
