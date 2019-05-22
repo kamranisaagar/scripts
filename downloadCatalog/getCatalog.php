@@ -8,7 +8,7 @@ $companyid=getCompanyId($storeid);
 $query = "SELECT CONCAT('ON',p.promoid) as promoid, promoname, DATE_FORMAT(startdate,'%Y%m%d') as startdate, 
 DATE_FORMAT(enddate,'%Y%m%d') as enddate, '0', '24', subcat, '2', amount, ctnamount, REPLACE(REPLACE(disabled, '1', 'RECALLED_ACK'),'0','ACKNOWLEDGED') as remote, disabled as markedexpired  FROM promotions p
 
-JOIN promostore ps ON p.promoid=ps.promoid AND ps.storeid={$storeid}";
+JOIN promostore ps ON p.promoid=ps.promoid AND ps.storeid={$storeid} and year(enddate) >= '2019'";
 			  
 $result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 
