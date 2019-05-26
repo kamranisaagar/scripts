@@ -23,6 +23,32 @@ $products = getAllProducts();
 
 $currentDate=getmyDate();
 
+/*
+
+// Getting Token for API
+require_once('c:/mpulse/assets/guzzle/vendor/autoload.php');
+
+$base_url= 'https://backend.merchantpulse.com.au/api';
+$client = new \GuzzleHttp\Client(['verify' => 'c:/mpulse/assets/guzzle/cacert.pem']);
+
+$mpulse_user=$storeinfo['mpulse_user'];
+$mpulse_password=$storeinfo['mpulse_password'];
+
+
+$response = $client->post($base_url.'/login', [
+    'json' => [
+        'email' => $mpulse_user,
+		'password' => $mpulse_password,
+    ]
+]);
+
+$body = json_decode($response->getBody(), true);
+$token = $body['token'];
+
+// Ends here
+
+*/
+
 function myErrorHandler($errno, $errstr, $errfile, $errline) {
 
     emailTrigger("kamranisaagarmob@gmail.com","Error Recorded","Error: [$errno] $errstr - Error on line $errline in $errfile");
