@@ -202,7 +202,7 @@ $query0 = "delete from dwh_storesubcat_flat where storeid={$storeid}";
 $result0 = $link2->query($query0) or die("Error in the consult.." . mysqli_error($link2));
 
 //Get Prices
-$query = "SELECT p1.sub_category, round(IFNULL(t1.pricesell,0),2) AS ctnprice, round(IFNULL(t2.pricesell,0),2) AS pktprice FROM products p1
+$query_new = "SELECT p1.sub_category, round(IFNULL(t1.pricesell,0),2) AS ctnprice, round(IFNULL(t2.pricesell,0),2) AS pktprice FROM products p1
 
 LEFT JOIN (SELECT p.sub_category,pricebuy,IFNULL(((pricesell*0.1)+pricesell)-pr.ctnamount,(pricesell*0.1)+pricesell) AS pricesell FROM products p
 LEFT JOIN (SELECT articlecategory AS subcat,SUM(amount) AS pktamount,SUM(ctnamount) AS ctnamount
@@ -230,7 +230,7 @@ GROUP BY p.sub_category) t2 ON t2.sub_category=p1.sub_category
 WHERE p1.category IN ('001','002','004','006') AND p1.sub_category IS NOT NULL
 GROUP BY p1.sub_category";
 
-$result = $link->query($query) or die("Error in the consult2.." . mysqli_error($link));
+$result_new = $link->query($query_new) or die("Error in the consult2.." . mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
 
