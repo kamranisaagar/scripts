@@ -39,7 +39,7 @@ GROUP BY p1.sub_category";
 
 $result_new = $link->query($query_new) or die("Error in the consult2.." . mysqli_error($link));
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result_new)) {
 
 $subcat[$row['sub_category']]=$row['sub_category'];	
 $packet_price[$row['sub_category']]=$row['pktprice'];
