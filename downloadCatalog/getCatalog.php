@@ -197,9 +197,8 @@ $result = $link->multi_query($query) or die("Error in the consult3.." . mysqli_e
 
 
 
-/*
 //Truncating
-$query0 = "delete from dwh_storesubcat_flat where storeid={$storeid}";		  
+$query0 = "delete from dwh_storesubcat_flat where storeid={$storeid}";	 
 $result0 = $link2->query($query0) or die("Error in the consult.." . mysqli_error($link2));
 
 //Get Prices
@@ -234,16 +233,17 @@ GROUP BY p1.sub_category";
 $result = $link->query($query) or die("Error in the consult2.." . mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
-	$subcat=$row['sub_category'];	
-	$packet_price=$row['packet_price'];
-	$carton_price==$row['carton_price'];
-	
-	$query1 = "insert ignore into dwh_storesubcat_flat(subcat, storeid, packet_price, carton_price) 
-	values ('{$subcat}','{$storeid}','{$packet_price}','{$carton_price}')";		  
-	$result1 = $link2->query($query1) or die("Error in the consult.." . mysqli_error($link2));
+
+$subcat[$row['sub_category']]=$row['sub_category'];	
+$packet_price[$row['sub_category']]=$row['pktprice'];
+$carton_price[$row['sub_category']]=$row['ctnprice'];
 }
 
-*/
+foreach ($subcat as $item) {
+$query1 = "insert ignore into dwh_storesubcat_flat(subcat, storeid, packet_price, carton_price) 
+values ('{$subcat[$item]}','{$storeid}','{$packet_price[$item]}','{$carton_price[$item]}')";	 
+$result1 = $link2->query($query1) or die("Error in the consult.." . mysqli_error($link2));
+}
 
 
 
