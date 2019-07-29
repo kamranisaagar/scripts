@@ -147,7 +147,7 @@ function getSequenceNumber(){
 		$qty=$arrayval['UNITS'];
 		$datetime=$arrayval['REMOVEDDATE'];
 		
-		$query="insert into voidlines(datetime, productname, units, tempid) values ('$datetime','$productname','$qty','$tempid')";
+		$query="insert into voidlines(datetime, productname, units) values ('$datetime','$productname','$qty')";
 		$result = $link2->query($query) or die("Error in the consult.." . mysqli_error($link2));
 	}
 
