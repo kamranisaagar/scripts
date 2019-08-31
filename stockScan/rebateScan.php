@@ -6,9 +6,15 @@ require_once('c:/mpulse/scripts/stockScan/mailerClass.php');
 
 //$currentDate="2019-02-03";
 
-$query = "SELECT articlecategory, startdate, enddate FROM promo_header WHERE DATE(enddate)='$currentDate' AND TYPE=1 AND remote='RECEIVED'
+$query = "SELECT articlecategory, startdate, enddate FROM promo_header ph
+WHERE DATE(enddate)=CURDATE() AND TYPE=1 AND remote='RECEIVED'
+
+AND articlecategory IN (SELECT sub_category FROM products WHERE supplier<>1 GROUP BY sub_category)
+
 UNION
-SELECT subcat, startdate,enddate FROM mpulse.recalled_promotions WHERE DATE(enddate) = '$currentDate';";
+SELECT subcat, startdate,enddate FROM mpulse.recalled_promotions
+WHERE DATE(enddate) =CURDATE() 
+AND subcat IN (SELECT sub_category FROM products WHERE supplier<>1 GROUP BY sub_category);";
 			  
 $result = $link->query($query) or die("Error in the consult.." . mysqli_error($link));
 $subcats=array();
